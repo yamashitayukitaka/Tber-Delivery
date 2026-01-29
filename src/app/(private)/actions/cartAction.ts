@@ -11,6 +11,8 @@ import { getPlaceDetails } from "@/lib/restaurants/api";
 import { Cart, Menu } from "@/types";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import Stripe from 'stripe';
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 type addToCartActionResponse = { type: 'new', cart: Cart } | { type: 'update', id: number };
 
@@ -194,10 +196,18 @@ export async function updateCartItemAction(quantity: number, cartItemId: number,
 
 export async function checkoutAction(
   cartId: number,
-  fee: number,
-  service: number,
-  delivery: number
+  sessionId: string,
 ) {
+
+  const fee = 100;
+  const service = 0;
+  const delivery = 0;
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+  if (session.payment_status !== 'paid') {
+    throw new Error('支払いが完了していません');
+  }
+
   const supabase = await createClient();
   //カートデータを取得
   const { data: cart, error: cartError } = await supabase
@@ -218,6 +228,17 @@ export async function checkoutAction(
     0
   );
   const total = fee + service + delivery + subtal;
+
+  const stripeTotal = session.amount_total;
+
+  if (stripeTotal !== total * 100) {
+    console.error('金額不一致', {
+      stripeTotal,
+      calculatedTotal: total * 100,
+    });
+    throw new Error('決済金額が一致しません');
+  }
+
   //ordersテーブルにデータを挿入
   const { data: order, error: orderError } = await supabase
     .from("orders")

@@ -1,6 +1,5 @@
 'use client';
 
-import React from "react";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,7 +19,7 @@ import {
 import { useCart } from "@/hooks/cart/useCart";
 import CartSkeleton from "./cart-skeleton";
 import { calculateItemTotal, calculateSubtotal, sumItems } from "@/lib/cart/utils";
-import { checkoutAction, updateCartItemAction } from "@/app/(private)/actions/cartAction";
+import { updateCartItemAction } from "@/app/(private)/actions/cartAction";
 import { useRouter } from "next/navigation";
 
 interface CartSummaryProps {
@@ -90,6 +89,7 @@ const CartSummary = ({ restaurantId }: CartSummaryProps) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           cart_items: cart.cart_items,
+          restaurantId: restaurantId,
         })
       }
       );
@@ -104,13 +104,7 @@ const CartSummary = ({ restaurantId }: CartSummaryProps) => {
 
   const handleCheckout = async () => {
     try {
-      await checkoutAction(cart.id, fee, service, delivery);
       await startCheckout();
-      mutateCart(
-        (prevCarts) => prevCarts?.filter((c) => c.id !== cart.id),
-        false
-      );
-      // push(`/restaurant/${cart.restaurant_id}/checkout/complete`);
     } catch (error) {
       console.error(error);
       alert('エラーが発生しました')

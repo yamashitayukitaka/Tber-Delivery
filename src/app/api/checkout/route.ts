@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function POST(request: Request) {
   try {
-    const { cart_items }: { cart_items: CartItem[]; } = await request.json();
+    const { cart_items, restaurantId }: { cart_items: CartItem[]; restaurantId: string; } = await request.json();
     if (!cart_items || cart_items.length === 0) {
       return NextResponse.json({ error: 'カートが空です' }, { status: 400 });
     }
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
       payment_method_types: ['card'],
       line_items,
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/product/checkout-success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/restaurant/${restaurantId}/checkout/complete?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}`,
     });
 
