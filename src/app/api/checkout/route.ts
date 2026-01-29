@@ -10,14 +10,27 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'カートが空です' }, { status: 400 });
     }
 
-    const line_items = cart_items.map(item => ({
-      price_data: {
-        currency: 'jpy',
-        product_data: { name: item.menus.name },
-        unit_amount: Math.round(item.menus.price),
+    const line_items = [
+      // 商品
+      ...cart_items.map(item => ({
+        price_data: {
+          currency: 'jpy',
+          product_data: { name: item.menus.name },
+          unit_amount: Math.round(item.menus.price),
+        },
+        quantity: item.quantity,
+      })),
+
+      // 手数料（★追加）
+      {
+        price_data: {
+          currency: 'jpy',
+          product_data: { name: 'サービス手数料' },
+          unit_amount: 100,
+        },
+        quantity: 1,
       },
-      quantity: item.quantity,
-    }));
+    ];
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],

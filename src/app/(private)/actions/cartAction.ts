@@ -231,10 +231,10 @@ export async function checkoutAction(
 
   const stripeTotal = session.amount_total;
 
-  if (stripeTotal !== total * 100) {
+  if (stripeTotal !== total) {
     console.error('金額不一致', {
       stripeTotal,
-      calculatedTotal: total * 100,
+      calculatedTotal: total,
     });
     throw new Error('決済金額が一致しません');
   }
