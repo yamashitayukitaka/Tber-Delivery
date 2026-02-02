@@ -1,14 +1,13 @@
-// ✅ (private)/layout.tsx は
-// (private) グループ配下のページ専用レイアウトであり、
-// (private) 外のページやレイアウトには影響しない
+import Header from "@/components/header";
 
-export default function PrivatePageLayout({
+export default function RestaurantPageLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <>
+      <Header />
       <main className="pt-16 max-w-7xl mx-auto px-10">
         {children}
       </main>

@@ -27,6 +27,8 @@ import Categories from "@/components/categories";
 import { fetchMenus } from "@/lib/menus/api";
 import MenuList from "@/components/menu-list";
 import MenuCard from "@/components/menu-card";
+import Header from "@/components/header";
+
 
 
 
@@ -56,11 +58,10 @@ export default async function Home() {
   // ✅{ data: [] }と言う記述方法について↓
   //左辺が分割代入ということは 右辺はdataまたはerrorをキーにもつオブジェクトでなければならない なので左辺の分割代入のdataに空配列を渡すためには、左辺を｛data:[]}としなければならない
 
-  console.log('unnko', menus)
 
   return (
     <>
-
+      <Header isHome={true} />
       <Categories />
 
       {/* レストラン情報表示 */}
