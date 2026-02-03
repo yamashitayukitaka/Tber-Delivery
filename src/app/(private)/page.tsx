@@ -28,6 +28,7 @@ import { fetchMenus } from "@/lib/menus/api";
 import MenuList from "@/components/menu-list";
 import MenuCard from "@/components/menu-card";
 import Header from "@/components/header";
+import Image from "next/image";
 
 
 
@@ -62,46 +63,60 @@ export default async function Home() {
   return (
     <>
       <Header isHome={true} />
-      <Categories />
+      <div className="h-[600px] overflow-hidden relative">
+        <Image
+          className="object-cover"
+          src="/images/header/img01.jpg"
+          alt="メインビジュアル"
+          fill
+          priority
+          sizes="(max-width:1280px) 100vw, 1920px"
+        />
+      </div>
 
-      {/* レストラン情報表示 */}
-      {!nearbyRestaurants ? (
-        <p>{restaurantsError}</p>
-      ) : nearbyRestaurants.length > 0 ? (
-        <Section title="近くのお店" expandedContent={<RestaurantList restaurants={nearbyRestaurants} />}>
-          {/* ✅コンポーネント出力タグはpropsとして渡すことができる */}
-          <CarouselContainer slideToShow={4}>
-            {nearbyRestaurants.map((restaurant) => (
-              <RestaurantCard restaurant={restaurant} />
-            ))}
-          </CarouselContainer>
-        </Section>
-      ) : (
-        <p>近くにレストランがありません</p>
-      )}
+      <div className="max-w-7xl mx-auto px-10">
+        <Categories />
 
-
-      {/* ラーメン店情報表示 */}
-      {!nearbyRamenRestaurants ? (
-        <p>{nearbyRamenRestaurantError}</p>
-      ) : nearbyRamenRestaurants.length > 0 ? (
-        <Section title="近くのラーメン店" expandedContent={<RestaurantList restaurants={nearbyRamenRestaurants} />}>
-          <CarouselContainer slideToShow={4}>
-            {nearbyRamenRestaurants.map((restaurant) => (
-              <RestaurantCard restaurant={restaurant} />
-            ))}
-          </CarouselContainer>
-        </Section>
-      ) : (
-        <p>近くにラーメン店がありません</p>
-      )}
+        {/* レストラン情報表示 */}
+        {!nearbyRestaurants ? (
+          <p>{restaurantsError}</p>
+        ) : nearbyRestaurants.length > 0 ? (
+          <Section title="近くのお店" expandedContent={<RestaurantList restaurants={nearbyRestaurants} />}>
+            {/* ✅コンポーネント出力タグはpropsとして渡すことができる */}
+            <CarouselContainer slideToShow={4}>
+              {nearbyRestaurants.map((restaurant) => (
+                <RestaurantCard restaurant={restaurant} />
+              ))}
+            </CarouselContainer>
+          </Section>
+        ) : (
+          <p>近くにレストランがありません</p>
+        )}
 
 
-      {/* <Section title="近くのお店">
+        {/* ラーメン店情報表示 */}
+        {!nearbyRamenRestaurants ? (
+          <p>{nearbyRamenRestaurantError}</p>
+        ) : nearbyRamenRestaurants.length > 0 ? (
+
+          <Section title="近くのラーメン店" expandedContent={<RestaurantList restaurants={nearbyRamenRestaurants} />}>
+            <CarouselContainer slideToShow={4}>
+              {nearbyRamenRestaurants.map((restaurant) => (
+                <RestaurantCard restaurant={restaurant} />
+              ))}
+            </CarouselContainer>
+          </Section>
+
+        ) : (
+          <p>近くにラーメン店がありません</p>
+        )}
+
+
+        {/* <Section title="近くのお店">
       <CarouselContainer slideToShow={4}> */}
 
-      {/* {Array.from({ length: 5 }).map((_, index) => ( */}
-      {/* // fromは未定義の値の配列を指定した個数分作成するためのメソッド
+        {/* {Array.from({ length: 5 }).map((_, index) => ( */}
+        {/* // fromは未定義の値の配列を指定した個数分作成するためのメソッド
           // 構造
           // [undefined, undefined, undefined, undefined, undefined]
 
@@ -109,10 +124,10 @@ export default async function Home() {
           // mapの引数は第一引数に配列の各要素が入るが今回は使わないので無視するという意味で_, 第二引数にインデックス番号を取得している
 
           // ★つまり全体の意図は：「5回ループして <RestaurantCard /> をインデックス番号をkeyとして描画する」 */}
-      {/* <RestaurantCard key={index} id={index} /> */}
-      {/* ))} */}
+        {/* <RestaurantCard key={index} id={index} /> */}
+        {/* ))} */}
 
-      {/* ✅上記のmap展開後の構造イメージ 
+        {/* ✅上記のmap展開後の構造イメージ 
         [
           <RestaurantCard key={0} />,
           <RestaurantCard key={1} />,
@@ -137,31 +152,31 @@ export default async function Home() {
         　 <RestaurantCard key={4} />,
         ]
         がPropsとしてCarouselContainerに渡される */}
-      {/* </CarouselContainer>
+        {/* </CarouselContainer>
       </Section> */}
 
-      {/* メニュー情報表示 */}
-      {!menus ? (
-        // ✅menusがundefinedの場合
-        <p>{menusError}</p>
-      ) : menus.length > 0 && restaurant ? (
-        // ✅ menus が存在し、かつ配列の要素数が1以上で、restaurant が存在する場合
-        <Section
-          title={restaurant?.restaurantName}
-          expandedContent={<MenuList menus={menus} />}
-        >
-          <CarouselContainer slideToShow={6}>
-            {menus.map((menu) => (
-              <MenuCard
-                menu={menu}
-              />
-            ))}
-          </CarouselContainer>
-        </Section>
-      ) : (
-        <p>メニューがありません</p>
-      )}
+        {/* メニュー情報表示 */}
+        {!menus ? (
+          // ✅menusがundefinedの場合
+          <p>{menusError}</p>
+        ) : menus.length > 0 && restaurant ? (
+          // ✅ menus が存在し、かつ配列の要素数が1以上で、restaurant が存在する場合
+          <Section
+            title={restaurant?.restaurantName}
+            expandedContent={<MenuList menus={menus} />}
+          >
+            <CarouselContainer slideToShow={6}>
+              {menus.map((menu) => (
+                <MenuCard
+                  menu={menu}
+                />
+              ))}
+            </CarouselContainer>
+          </Section>
+        ) : (
+          <p>メニューがありません</p>
+        )}
+      </div>
     </>
-
   );
 }

@@ -1,3 +1,7 @@
+// ✅ (private)/layout.tsx は
+// (private) グループ配下のページ専用レイアウトであり、
+// (private) 外のページやレイアウトには影響しない
+
 import Header from "@/components/header";
 
 export default function RestaurantPageLayout({
@@ -8,7 +12,7 @@ export default function RestaurantPageLayout({
   return (
     <>
       <Header />
-      <main className="pt-16 max-w-7xl mx-auto px-10">
+      <main className="max-w-7xl mx-auto  px-10 pt-16">
         {children}
       </main>
       {/*{children}は同一階層または下階層のpage.tsxの内容を出力する子コンポーネントタグのようなもの */}

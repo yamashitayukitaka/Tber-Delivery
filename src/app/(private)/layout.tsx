@@ -2,6 +2,8 @@
 // (private) グループ配下のページ専用レイアウトであり、
 // (private) 外のページやレイアウトには影響しない
 
+import Header from "@/components/header";
+
 export default function PrivatePageLayout({
   children,
 }: Readonly<{
@@ -9,7 +11,7 @@ export default function PrivatePageLayout({
 }>) {
   return (
     <>
-      <main className="pt-16 max-w-7xl mx-auto px-10">
+      <main>
         {children}
       </main>
       {/*{children}は同一階層または下階層のpage.tsxの内容を出力する子コンポーネントタグのようなもの */}
