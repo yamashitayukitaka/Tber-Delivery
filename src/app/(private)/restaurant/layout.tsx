@@ -4,14 +4,15 @@
 
 import Header from "@/components/header";
 
-export default function PrivatePageLayout({
+export default function RestaurantPageLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <>
-      <main>
+      <Header />
+      <main className="max-w-7xl mx-auto  px-10 pt-16">
         {children}
       </main>
       {/*{children}は同一階層または下階層のpage.tsxの内容を出力する子コンポーネントタグのようなもの */}
