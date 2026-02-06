@@ -64,7 +64,6 @@ export default async function Home() {
 
   return (
     <>
-      <Header />
       <div className="h-[600px] overflow-hidden relative">
         <Image
           className="object-cover"
