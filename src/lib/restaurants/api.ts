@@ -561,7 +561,7 @@ export async function fetchLocation() {
   } = await supabase.auth.getUser();
 
   if (userError || !user) {
-    redirect("/login");
+    return { lat: DEFAULT_LOCATION.lat, lng: DEFAULT_LOCATION.lng };
   }
 
   // 選択中の緯度と経度を取得

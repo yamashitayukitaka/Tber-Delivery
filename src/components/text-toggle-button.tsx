@@ -1,8 +1,6 @@
 'use client'
 // useStateはクライアントコンポネントでしか使えないため、'use client' を付ける
 
-
-import React, { use } from 'react'
 import { useState } from "react"
 import { Button } from "./ui/button"
 

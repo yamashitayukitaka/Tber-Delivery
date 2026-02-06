@@ -1,18 +1,18 @@
 import { categoryMenu, Menu } from "@/types";
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 export async function fetchCategoryMenus(primaryType: string, searchQuery?: string) {
   const supabase = await createClient();
   const bucket = supabase.storage.from('menus')
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
+  // const {
+  //   data: { user },
+  //   error: userError,
+  // } = await supabase.auth.getUser();
 
-  if (userError || !user) {
-    redirect("/login");
-  }
+  // // if (userError || !user) {
+  // //   redirect("/login");
+  // // }
 
 
   let query = supabase

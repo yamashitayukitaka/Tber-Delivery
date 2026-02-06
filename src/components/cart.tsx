@@ -11,6 +11,7 @@ import type { Cart } from "@/types";
 import { useCartVisibility } from "@/app/context/cartContext";
 import { useParams } from "next/navigation";
 
+
 export default function Cart() {
   const [selectedCart, setSelectedCart] = useState<Cart | null>(null);
   const { isOpen, openCart, closeCart } = useCartVisibility();
@@ -20,6 +21,8 @@ export default function Cart() {
 
   const { displayMode, sheetCart, cartCount } = computeCartDisplayLogic(carts, selectedCart, targetCart);
   console.log('carts', carts);
+
+
 
   useEffect(() => {
     if (!carts || !selectedCart) return;
@@ -40,6 +43,7 @@ export default function Cart() {
   if (isLoading || !carts) {
     return <div>Loading...</div>
   }
+
   return displayMode === 'cartSheet' ? (
     <CartSheet cart={sheetCart} count={cartCount} isOpen={isOpen} closeCart={closeCart} openCart={openCart} mutateCart={mutateCart} />
   ) : (

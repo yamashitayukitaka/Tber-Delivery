@@ -9,9 +9,12 @@ import {
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { Cart, CartItem, Menu } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addToCartAction } from "@/app/(private)/actions/cartAction";
 import { KeyedMutator } from "swr";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+
 
 interface MenuModalProps {
   isOpen: boolean;
@@ -25,8 +28,10 @@ interface MenuModalProps {
 
 export default function MenuModal({ isOpen, closeModal, selectedItem, restaurantId, openCart, targetCart, mutateCart }: MenuModalProps) {
 
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [quantity, setQuantity] = useState(1);
   console.log('MenuModal targetCart', targetCart);
+  const { push } = useRouter();
 
   const existingCartItem = targetCart
     ? targetCart?.cart_items.find(
@@ -36,6 +41,28 @@ export default function MenuModal({ isOpen, closeModal, selectedItem, restaurant
 
 
   console.log("existingCartItem", existingCartItem);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const supabase = createClient()
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser()
+
+      if (error || !user) {
+        setIsLoggedIn(false)
+      } else {
+        setIsLoggedIn(true)
+      }
+    }
+
+    fetchUser()
+  }, [])
+
+
+
+
 
 
 
@@ -143,15 +170,27 @@ export default function MenuModal({ isOpen, closeModal, selectedItem, restaurant
                 </div>
 
 
-                <Button
-                  type="button"
-                  size="lg"
-                  className="mt-6 h-14 text-lg font-semibold"
-                  onClick={handleAddToCart}
-                >
-                  {existingCartItem ? '商品を更新' : '商品を追加'}
-                  （￥{selectedItem.price * quantity}）
-                </Button>
+                {!isLoggedIn ? (
+                  <Button
+                    type="button"
+                    size="lg"
+                    className="mt-6 h-14 text-lg font-semibold"
+                    onClick={() => { push('/login') }}
+                  >
+                    {existingCartItem ? '商品を更新' : '商品を追加'}
+                    （￥{selectedItem.price * quantity}）
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    size="lg"
+                    className="mt-6 h-14 text-lg font-semibold"
+                    onClick={handleAddToCart}
+                  >
+                    {existingCartItem ? '商品を更新' : '商品を追加'}
+                    （￥{selectedItem.price * quantity}）
+                  </Button>
+                )}
 
               </div>
             </div>

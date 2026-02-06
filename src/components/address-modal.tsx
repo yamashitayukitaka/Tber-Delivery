@@ -26,6 +26,7 @@ import { Address } from "@/types";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface AddressResponse {
   addressList: Address[];
@@ -64,6 +65,7 @@ export default function AddressModal() {
         //   "Content-Type": "application/json",
         // }
       });
+
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -121,8 +123,8 @@ export default function AddressModal() {
     //✅fetcher関数はuseSWR(/api/address, fetcher)が実行合図となる
     const response = await fetch(url);
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error);
+      // const errorData = await response.json();
+      return { addressList: [], selectedAddress: null };
       // ✅throw new Errorを使うことで、useSWRのerrorにエラー内容が渡される
       // デフォルトではルートハンドラーズからsupabase経由でのエラー内容はdata内に入るので
       // useSWRのerrorで受け取れないのでthrow new Errorでエラー内容をuseSWRのerrorに渡した
@@ -161,6 +163,14 @@ export default function AddressModal() {
     return <div>{error.message}</div>
   }
   if (loading) return <div>loading...</div>
+
+  if (!data?.addressList.length) {
+    return (
+      <Link href="/login">
+        住所検索はログインしてください
+      </Link>
+    )
+  }
 
   const handleSelectSuggestion = async (suggestion: AddressSuggestion) => {
     //✅サーバーアクションズ呼び出し

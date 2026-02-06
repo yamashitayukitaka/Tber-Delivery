@@ -10,7 +10,6 @@ import { getPlaceDetails } from "@/lib/restaurants/api";
 
 import { Cart, Menu } from "@/types";
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -25,7 +24,7 @@ export async function addToCartAction(selectedItem: Menu, quantity: number, rest
   } = await supabase.auth.getUser();
 
   if (userError || !user) {
-    redirect("/login");
+    throw new Error("ログインが必要です");
   }
 
 
@@ -150,7 +149,7 @@ export async function updateCartItemAction(quantity: number, cartItemId: number,
   } = await supabase.auth.getUser();
 
   if (userError || !user) {
-    redirect("/login");
+    throw new Error("ログインが必要です");
   }
   //削除処理
   if (quantity === 0) {

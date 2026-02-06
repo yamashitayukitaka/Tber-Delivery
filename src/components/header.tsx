@@ -17,18 +17,32 @@ type HeaderProps = {
 const Header = async ({ isHome }: HeaderProps) => {
   const { lat, lng } = await fetchLocation();
 
+
   if (isHome) {
     // 🟢 トップページ用
     return (
-      <header className=" h-16 fixed top-0 left-0 w-full z-50">
-        <div className="flex items-center h-full space-x-4 px-4 max-w-[1920px] mx-auto">
+      <header className="relative bg-background h-[600px] w-full">
+        {/* 背景 */}
+        <div className="absolute inset-0">
+          <Image
+            className="object-cover"
+            src="/images/header/img01.jpg"
+            alt="メインビジュアル"
+            fill
+            priority
+            sizes="(max-width:1280px) 100vw, 1920px"
+          />
+        </div>
+
+        {/* 中身 */}
+        <div className="relative z-10 flex items-center space-x-4 px-10 py-4 w-full">
           <MenuSheet />
           <div className="font-bold">
             <Link href="/">Delivery APP</Link>
           </div>
-          <div className="flex flex-col gap-2 flex-1 pt-8">
+          <AddressModal />
+          <div className="flex-1">
             <PlaceSearchBar lat={lat} lng={lng} />
-            <AddressModal />
           </div>
           <Cart />
         </div>
@@ -36,7 +50,7 @@ const Header = async ({ isHome }: HeaderProps) => {
     );
   }
 
-  // 🔵 それ以外のページ用
+
   return (
     <header className=" h-16 fixed top-0 left-0 w-full z-50">
       <div className="flex items-center h-full space-x-4 px-4 max-w-[1920px] mx-auto">
@@ -52,6 +66,7 @@ const Header = async ({ isHome }: HeaderProps) => {
 
         <Cart />
       </div>
+
     </header>
   );
 };
