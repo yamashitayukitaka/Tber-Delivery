@@ -11,6 +11,7 @@ export default function PrivatePageLayout({
 }>) {
   return (
     <>
+      <Header />
       <main>
         {children}
       </main>
