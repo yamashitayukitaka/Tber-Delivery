@@ -1,5 +1,4 @@
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 import { getPlaceDetails } from "../restaurants/api";
 import { Order } from "@/types";
 
@@ -10,14 +9,14 @@ export async function fetchOrders(): Promise<Order[]> {
   const bucket = supabase.storage.from('menus')
   const { data: { user }, error: userError } = await supabase.auth.getUser()
 
-  if (userError || !user) {
-    redirect('/login');
+  if (!user) {
+    return [];
   }
 
   const { data: orders, error: ordersError } = await supabase
     .from('orders')
     .select('id,restaurant_id,user_id,created_at,fee,service,delivery,subtotal_price,total_price,order_items(quantity,id,price,name,image_path)')
-    .eq('user_id', user.id)
+    .eq('user_id', user?.id)
     .order('created_at', { ascending: false })
 
   if (ordersError) {

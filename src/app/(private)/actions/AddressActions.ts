@@ -3,7 +3,6 @@ import { getPlaceDetails } from "@/lib/restaurants/api";
 // ✅'use server'を書かないとクライアントで呼び出したとき クライアント側で実行される
 import { AddressSuggestion } from "@/types";
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 
 
 export async function selectSuggestionAction(suggestion: AddressSuggestion, sessionToken: string) {
@@ -40,7 +39,7 @@ export async function selectSuggestionAction(suggestion: AddressSuggestion, sess
 
   console.log('ユーザー', user);
   if (useError || !user) {
-    redirect('/login');
+    throw new Error("ログインが必要です");
   }
 
   const { error: insertError, data: newAddress } = await supabase
@@ -94,7 +93,7 @@ export async function selectAddressAction(addressId: number) {
   } = await supabase.auth.getUser();
 
   if (userError || !user) {
-    redirect("/login");
+    throw new Error("ログインが必要です");
   }
 
   const { error: updateError } = await supabase
@@ -119,7 +118,7 @@ export async function deleteAddressAction(addressId: number) {
   } = await supabase.auth.getUser();
 
   if (userError || !user) {
-    redirect("/login");
+    throw new Error("ログインが必要です");
   }
 
   const { error: deleteError } = await supabase

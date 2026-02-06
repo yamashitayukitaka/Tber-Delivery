@@ -14,13 +14,9 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Bookmark } from 'lucide-react';
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 // 今回はサーバーコンポーネントなのでimport文でサーバーコンポーネント用のcreateClient()を使用する
 // 注）クライアントコンポーネントでは、必ず クライアント用の createClient() を使用する必要がある
 import { logout } from "@/app/(auth)/login/actions";
-
-
-
 
 const MenuSheet = async () => {
 
@@ -29,13 +25,8 @@ const MenuSheet = async () => {
   // getUser()が非同期関数なのでawaitで後続の処理をsupabase.auth.getUser()の完了まで待機させる必要がある。
   // getUserがイベントループに入る間に他の後続の同期処理が実行されると、user情報が取得できないまま後続の処理が進んでしまうため。
 
-  if (!user) {
-    redirect('/login') // user情報がない場合はログインページへリダイレクトする
-  }
-
-  const { avatar_url, full_name } = user.user_metadata;
-  // user.user_metadata オブジェクトからavatar_url と full_name という プロパティ名が一致する値 を取り出しています。
-
+  const avatar_url = user?.user_metadata?.avatar_url || '';
+  const full_name = user?.user_metadata?.full_name || '';
 
   return (
     <Sheet>

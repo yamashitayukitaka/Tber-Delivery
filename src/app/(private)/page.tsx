@@ -47,9 +47,11 @@ export default async function Home() {
 
   const restaurant = nearbyRamenRestaurants?.[0];
   const primaryType = restaurant?.primaryType;
+
+  console.log('kuso', restaurant)
   // ✅オプショナルチェイニングは配列番号の前に.(ドット）をつけ忘れないようにする
 
-
+  console.log('primaryType', primaryType)
   const { data: menus, error: menusError } = primaryType ? await fetchMenus(primaryType) : { data: [] };
   // ✅primaryType が存在する場合は fetchMenus を実行し、存在しない場合は data に空配列、error は undefined になる
 
