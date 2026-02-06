@@ -7,6 +7,7 @@ import { fetchLocation } from '@/lib/restaurants/api';
 import Cart from './cart';
 import PlaceSearchBar from './place-search-bar';
 import MenuSheet from './menu-sheet';
+import Image from 'next/image';
 
 
 
