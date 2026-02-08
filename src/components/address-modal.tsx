@@ -166,7 +166,22 @@ export default function AddressModal() {
 
   if (!data?.addressList.length) {
     return (
-      <Link href="/login">
+      <Link href="/login"
+        className="
+      inline-flex 
+      items-center 
+      justify-center 
+      gap-2 
+      px-4 py-2 
+      rounded-md 
+      bg-blue-500 
+      text-white 
+      font-medium 
+      hover:bg-blue-600 
+      focus:outline-none 
+      focus:ring-2 
+      focus:ring-blue-400 
+      cursor-pointer">
         住所検索はログインしてください
       </Link>
     )

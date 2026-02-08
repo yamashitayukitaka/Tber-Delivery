@@ -35,7 +35,7 @@ export default async function RestaurantCard({ restaurant }: RestaurantCardProps
   return (
     <div className='relative'>
       <Link href={`/restaurant/${restaurant.id}`} className='inset-0 absolute z-10'></Link>
-      <div className="relative aspect-video rounded-lg overflow-hidden">
+      <div className="relative aspect-5/4 overflow-hidden">
         <Image
           className='object-cover'
           src={restaurant?.photoUrl}
@@ -43,16 +43,19 @@ export default async function RestaurantCard({ restaurant }: RestaurantCardProps
           alt="restaurant image"
           sizes="(max-width:1280px) 25vw, 280px"
         />
+        <div className="absolute bottom-0 w-full">
+          <p className='font-bold  bg-black/60 text-white w-full px-2'>{restaurant?.restaurantName}</p>
+        </div>
       </div>
       <div className='flex justify-between'>
-        <p className='font-bold'>{restaurant?.restaurantName}</p>
-        <div className='z-20'>
+
+        {/* <div className='z-20'>
           <Heart
             color='red'
             strokeWidth={3}
             size={15}
             className='hover:fill-red-500 hover:stroke-0' />
-        </div>
+        </div> */}
       </div>
     </div>
   )

@@ -7,6 +7,7 @@ import { fetchLocation } from '@/lib/restaurants/api';
 import Cart from './cart';
 import PlaceSearchBar from './place-search-bar';
 import MenuSheet from './menu-sheet';
+import Image from 'next/image';
 
 const Header = async () => {
   const { lat, lng } = await fetchLocation();
@@ -15,7 +16,15 @@ const Header = async () => {
       <div className="flex items-center h-full space-x-4 px-4 max-w-[1920px] mx-auto">
         <MenuSheet />
         <div className="font-bold">
-          <Link href="/">Delivery APP</Link>
+          <Link href="/">
+            <Image
+              src="/images/header/img01.png"
+              alt="Tber-Delivery"
+              width={200}
+              height={200}
+              priority
+            />
+          </Link>
         </div>
 
         <AddressModal />
