@@ -531,9 +531,11 @@ export async function getPlaceDetails(placeId: string, fields: string[], session
   }
 
   if (fields.includes('photos')) {
-    results.photoUrl = data.photos?.[0]?.name
-      ? await getPhotoUrl(data.photos[0].name, 1200)
-      : "/no_image.png";
+    // results.photoUrl = data.photos?.[0]?.name
+    //   ? await getPhotoUrl(data.photos[0].name, 1200)
+    //   : "/no_image.png";
+    results.photoUrl = "/images/header/img01.jpg";
+
     // ✅配列に対してもオプショナルは使える
     // オブジェクト専用ではない
   }
