@@ -1,3 +1,4 @@
+'use client'
 import {
   Carousel,
   CarouselContent,
@@ -5,6 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { useEffect, useState } from "react";
 
 
 interface CarouselContainerProps {
@@ -21,9 +23,41 @@ interface CarouselContainerProps {
   //    がPropsとしてCarouselContainerに渡されるいるのでchildrenはReact.ReactNodeの配列型とするするために[]をつける
 
   slideToShow: number;
+  variant?: boolean;
 }
 
-export default function CarouselContainer({ children, slideToShow }: CarouselContainerProps) {
+export default function CarouselContainer({ children, slideToShow, variant }: CarouselContainerProps) {
+  const [slides, setSlides] = useState(slideToShow);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (variant) {
+        if (window.innerWidth <= 768) {
+          setSlides(5);
+        } else if (window.innerWidth <= 1200) {
+          setSlides(10);
+        } else {
+          setSlides(slideToShow);
+        }
+      } else {
+        if (window.innerWidth <= 768) {
+          setSlides(2);
+        } else if (window.innerWidth <= 1200) {
+          setSlides(3);
+        } else {
+          setSlides(slideToShow);
+        }
+      }
+    };
+
+    // 初期判定（これ超重要）
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [variant]);
+
+
   return (
     <Carousel
       opts={{
@@ -34,7 +68,7 @@ export default function CarouselContainer({ children, slideToShow }: CarouselCon
       <CarouselContent>
         {children.map((child, index) => (
           <CarouselItem key={index}
-            style={{ flexBasis: `${100 / slideToShow}%` }}
+            style={{ flexBasis: `${100 / slides}%` }}
           >
             {/* 
             ✅basis-1/3" は「親要素の幅の1/3の幅を持つ」という意味

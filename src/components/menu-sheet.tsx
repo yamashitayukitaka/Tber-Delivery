@@ -28,6 +28,10 @@ const MenuSheet = async () => {
   const avatar_url = user?.user_metadata?.avatar_url || '';
   const full_name = user?.user_metadata?.full_name || '';
 
+  if (!user) {
+    return;
+  }
+
   return (
     <Sheet>
       <SheetTrigger asChild>

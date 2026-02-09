@@ -96,7 +96,7 @@ export default async function Home() {
               {/* ✅コンポーネント出力タグはpropsとして渡すことができる */}
               <CarouselContainer slideToShow={4}>
                 {nearbyRestaurants.map((restaurant) => (
-                  <RestaurantCard restaurant={restaurant} />
+                  <RestaurantCard restaurant={restaurant} key={restaurant.id} />
                 ))}
               </CarouselContainer>
             </Section>
@@ -113,7 +113,7 @@ export default async function Home() {
             <Section title="近くのラーメン店" expandedContent={<RestaurantList restaurants={nearbyRamenRestaurants} />}>
               <CarouselContainer slideToShow={4}>
                 {nearbyRamenRestaurants.map((restaurant) => (
-                  <RestaurantCard restaurant={restaurant} />
+                  <RestaurantCard restaurant={restaurant} key={restaurant.id} />
                 ))}
               </CarouselContainer>
             </Section>

@@ -126,7 +126,7 @@ export default function Categories() {
 
 
   return (
-    <CarouselContainer slideToShow={10}>
+    <CarouselContainer slideToShow={10} variant={true}>
       {
         categories.map((category) => (
           <Category

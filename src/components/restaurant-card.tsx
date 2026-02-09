@@ -43,9 +43,9 @@ export default async function RestaurantCard({ restaurant }: RestaurantCardProps
           alt="restaurant image"
           sizes="(max-width:1280px) 25vw, 280px"
         />
-        <div className="absolute bottom-0 w-full">
-          <p className='font-bold  bg-black/60 text-white w-full px-2'>{restaurant?.restaurantName}</p>
-        </div>
+      </div>
+      <div className="w-full">
+        <p className='font-bold  bg-black/60 text-white w-full px-2'>{restaurant?.restaurantName}</p>
       </div>
       <div className='flex justify-between'>
 
