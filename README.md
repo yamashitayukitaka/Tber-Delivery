@@ -56,7 +56,6 @@ Tber-Delivery は、ユーザーが現在地周辺の店舗を検索し、
 - Server Component / Client Component の適切な使い分け
 - Route Handlers / Server Actions の適切な使用
 - コンポーネント分割と責務の明確化
-- Tailwind CSS + clsx による状態依存スタイル管理
 - TypeScript による適切な型定義と型エラー回避
 - Supabase API 通信時のエラーハンドリング
 
