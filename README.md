@@ -3,7 +3,7 @@
 フードデリバリーサービスを想定した Web アプリケーションです。  
 ユーザー認証・決済・店舗検索など、**実務で必要となる主要機能を一通り実装**しています。
 
-#Demo 
+## 🔗 Demo
 https://tber-delivery.vercel.app/
 
 ---
@@ -69,13 +69,12 @@ Tber-Delivery は、ユーザーが現在地周辺の店舗を検索し、
 - pnpm
 
 ### インストール
-
-```bash
-pnpm install
-
+-pnpm install
 
 
 データベースER図
 https://www.figma.com/board/XldurHHcUNWb07s3K0UxEs/Untitled?node-id=1-5&t=3nUXMsM4WrLPrcZx-1
 <img width="1392" height="1055" alt="Image" src="https://github.com/user-attachments/assets/6461b4e6-0d39-436a-a93f-0bde5c41513b" />
+
+
 
