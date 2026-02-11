@@ -67,8 +67,27 @@ Tber-Delivery は、ユーザーが現在地周辺の店舗を検索し、
 - Node.js 18 以上
 - pnpm
 
-### インストール
--pnpm install
+### インストール・起動
+   ```bash
+   pnpm install
+   pnpm run dev
+   ```
+   → `http://localhost:3000` で起動します。
+   ※ 初回は `pnpm install` で依存関係インストールが必要です。
+
+### env.localに環境変数をセット
+- プロジェクト直下に .env.local を作成
+- 以下を設定してください
+ ```bash
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+GOOGLE_API_KEY=
+STRIPE_SECRET_KEY=
+  ```
+
+
 
 
 データベースER図
