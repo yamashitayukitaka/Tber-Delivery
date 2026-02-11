@@ -32,7 +32,10 @@ export default function CarouselContainer({ children, slideToShow, variant }: Ca
   useEffect(() => {
     const handleResize = () => {
       if (variant) {
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 520) {
+          setSlides(3);
+        }
+        else if (window.innerWidth <= 768) {
           setSlides(5);
         } else if (window.innerWidth <= 1200) {
           setSlides(10);
@@ -40,10 +43,8 @@ export default function CarouselContainer({ children, slideToShow, variant }: Ca
           setSlides(slideToShow);
         }
       } else {
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 1200) {
           setSlides(2);
-        } else if (window.innerWidth <= 1200) {
-          setSlides(3);
         } else {
           setSlides(slideToShow);
         }

@@ -81,7 +81,7 @@ export default function CartSheet({ cart, count, isOpen, closeCart, openCart, mu
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => (open ? openCart() : closeCart())}>
-      <SheetTrigger className="relative cursor-pointer">
+      <SheetTrigger className="relative cursor-pointer flex flex-start">
         <ShoppingCart />
         <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-green-700 rounded-full size-4 text-xs text-primary-foreground flex items-center justify-center">
           {count}
@@ -106,13 +106,13 @@ export default function CartSheet({ cart, count, isOpen, closeCart, openCart, mu
                   {cart.restaurantName}
                 </Link>
               </SheetClose>
-              <TooltipProvider>
+              {/* <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
                       variant="ghost"
                       size={"icon"}
-                    // onClick={handleClearCart}
+                    onClick={handleClearCart}
                     >
                       <Trash2 color="red" />
                     </Button>
@@ -121,7 +121,7 @@ export default function CartSheet({ cart, count, isOpen, closeCart, openCart, mu
                     <p>ゴミ箱を空にする</p>
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
+              </TooltipProvider> */}
             </div>
             {/* メニューエリア */}
             <ul className="flex-1 overflow-y-auto">

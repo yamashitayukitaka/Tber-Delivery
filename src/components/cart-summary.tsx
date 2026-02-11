@@ -111,7 +111,7 @@ const CartSummary = ({ restaurantId }: CartSummaryProps) => {
     }
   }
   return (
-    <Card className="max-w-md min-w-[420px]">
+    <Card className="w-[700px]">
       <CardHeader>
         <Link href={`/restaurant/${cart.restaurant_id}`} className="mb-4 flex justify-between items-center">
           <div className="flex items-center gap-4 flex-1">
@@ -129,7 +129,7 @@ const CartSummary = ({ restaurantId }: CartSummaryProps) => {
           <ChevronRight size={16} />
         </Link>
         <Button className="cursor-pointer" onClick={handleCheckout}>
-          本ページの内容を確認の上、注文を確定する
+          <p><span className="max-md:hidden">本ページの内容を確認の上、</span>注文を確定する</p>
         </Button>
       </CardHeader>
       <CardContent>
@@ -138,8 +138,8 @@ const CartSummary = ({ restaurantId }: CartSummaryProps) => {
           <AccordionItem value="item-1">
             <AccordionTrigger>カートの中身{sumItems(cart.cart_items)}個の商品</AccordionTrigger>
             {cart.cart_items.map((cartItem) => (
-              <AccordionContent key={cartItem.id} className="flex items-center">
-                <div className="flex items-center gap-4 flex-1">
+              <AccordionContent key={cartItem.id} className="flex items-center max-md:flex-col max-md:gap-4 max-md:items-start max-md:mb-5">
+                <div className="flex items-center gap-4 flex-1 max-md:flex-start">
                   <div className="relative size-14 rounded-full overflow-hidden flex-none">
                     <Image
                       src={cartItem.menus.photoUrl}

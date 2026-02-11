@@ -62,7 +62,7 @@ export default async function Home() {
 
 
   return (
-    <>
+    <div className="pt-[78px] max-xl:pt-32 max-md:pt-[201px]">
       <div className="h-[600px] overflow-hidden relative">
         <Image
           className="object-cover"
@@ -81,6 +81,7 @@ export default async function Home() {
       <div className="relative py-10">
         <Image
           className="object-cover -z-10"
+          id="main-visual"
           src="/images/top/img01.png"
           alt="メインビジュアル"
           fill
@@ -189,6 +190,6 @@ export default async function Home() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

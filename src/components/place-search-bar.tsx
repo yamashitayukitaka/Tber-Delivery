@@ -148,7 +148,7 @@ export default function PlaceSearchBar({ lat, lng }: PlaceSearchBarProps) {
 
 
   return (
-    <Command onKeyDown={handleOnKeyDown} className="overflow-visible bg-muted" shouldFilter={false}>
+    <Command onKeyDown={handleOnKeyDown} className="overflow-visible bg-muted h-9" shouldFilter={false}>
       {/* ✅onKeyDownは任意のボタンを押したタイミングで毎回発火する */}
       <CommandInput placeholder="店舗名で検索する"
         value={inputText}

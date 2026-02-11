@@ -13,10 +13,10 @@ interface CategorySidebarProps {
 
 export default function CategorySidebar({ categoryMenus, onSelectCategory, activeCategoryId }: CategorySidebarProps) {
   return (
-    <aside className="w-1/4  sticky top-16 h-[calc(100vh-64px)]">
+    <aside className="w-1/4  sticky top-16 z-50 h-[calc(100vh-64px)] max-xl:w-full max-xl:top-25 max-xl:h-fit bg-white max-md:static max-md:z-0 max-md:hidden">
       <p className="p-3 font-bold">メニュー Menu</p>
       <nav>
-        <ul>
+        <ul className="max-xl:flex">
           {categoryMenus.map((category) => (
             <li key={category.id}>
               <button onClick={() => onSelectCategory(category.id)} className={cn(

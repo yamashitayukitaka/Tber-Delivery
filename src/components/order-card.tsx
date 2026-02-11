@@ -18,7 +18,7 @@ interface OrderCardProps {
 export default function OrderCard({ order }: OrderCardProps) {
   return (
     <>
-      <Card className="w-full max-w-3xl mx-auto">
+      <Card className="w-[92%] max-w-3xl mx-auto">
         <CardHeader className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="relative size-16 rounded-full overflow-hidden flex-none">

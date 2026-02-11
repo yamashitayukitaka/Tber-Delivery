@@ -126,9 +126,9 @@ export default function MenuModal({ isOpen, closeModal, selectedItem, restaurant
               <DialogDescription>{selectedItem.name} の詳細</DialogDescription>
             </DialogHeader>
 
-            <div className="flex gap-6">
+            <div className="flex gap-6 max-md:flex-col">
               {/* 左 画像 */}
-              <div className="relative aspect-square w-1/2 rounded-lg overflow-hidden">
+              <div className="relative aspect-square w-1/2 rounded-lg overflow-hidden max-md:w-full">
                 <Image
                   fill
                   src={selectedItem?.photoUrl}
@@ -138,7 +138,7 @@ export default function MenuModal({ isOpen, closeModal, selectedItem, restaurant
               </div>
 
               {/* 右 詳細 */}
-              <div className="flex flex-col flex-1 w-1/2">
+              <div className="flex flex-col flex-1 w-1/2 max-md:w-full">
                 {/* 上部：名前と単価 */}
                 <div className="space-y-2">
                   <p className="text-2xl font-bold">{selectedItem.name}</p>

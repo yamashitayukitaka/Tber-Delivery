@@ -31,7 +31,7 @@ export default function Category({ category, onClick, select }: CategoryProps) {
           src={category.imageUrl}
           alt={category.categoryName}
           fill
-          sizes="(max-width:1280px) 10vw, 97px"
+          sizes="(max-width:1280px) 100px, 97px"
         // sizes 属性の意味:
         // (max-width:1280px) 10vw
         // 画面幅が1280px以下の場合、ブラウザに

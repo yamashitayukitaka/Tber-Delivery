@@ -28,7 +28,7 @@ export default async function SearchPage({
     // 受けとったオブジェクト（キーがdata値がcategoryRestaurantsの内容）を分割代入として受け取り キー名をcategoryRestaurantsに変更している
     // 受けとったオブジェクト（キーがerror値が `NearbySearchリクエスト失敗:${response.status}`）を分割代入として受け取り キー名をfetchErrorに変更している
     return (
-      <>
+      <div className="max-w-7xl mx-auto px-10 py-24">
         <div className="mb-4">
           <Categories />
         </div>
@@ -43,14 +43,14 @@ export default async function SearchPage({
             ✅
           </p>
         )}
-      </>
+      </div>
     );
   } else if (restaurant) {
     const { data: restaurants, error: fetchError } = await fetchRestaurantsByKeyword(restaurant, lat, lng);
     console.log('text_search_results', restaurants)
 
     return (
-      <>
+      <div className="max-w-7xl mx-auto px-10 py-24">
         <div className="mb-4">
           <Categories />
         </div>
@@ -68,7 +68,7 @@ export default async function SearchPage({
             <strong>{restaurant}</strong>に一致するレストランが見つかりません
           </p>
         )}
-      </>
+      </div>
     );
   } else {
     redirect(('/'))
