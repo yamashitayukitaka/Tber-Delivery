@@ -7,54 +7,22 @@ import { notFound } from "next/navigation";
 
 export default async function RestaurantPage({
   params,
-  // ✅動的ルーティングの値をURLから取得できる
   searchParams,
-  //クエリパラメーターのキーと値を取得できる
-}:
-  // ✅このとき Next.js が内部で：
-  // URL の 動的ルーティング部分 → params
-  // URL の クエリパラメーター → searchParams
-  // を 自動で解析してデータを引数に渡す。
-  // 引数名は他の名前ではだめ
-  {
-    params: Promise<{ restaurantId: string }>;
-    searchParams: Promise<{ sessionToken?: string; searchMenu?: string }>;
-  }) {
+}: {
+  params: Promise<{ restaurantId: string }>;
+  searchParams: Promise<{ sessionToken?: string; searchMenu?: string }>;
+}) {
   const { restaurantId } = await params;
   const { sessionToken, searchMenu } = await searchParams;
-  // ✅searchParams にキーが存在しない場合、その値は undefinedになる
-  // undefinedも関数に引数に渡せる
-  // sessionTokenが存在しない場合はundefinedが渡される
-
-  console.log("searchMenu", searchMenu);
-
-  console.log("restaurantId", restaurantId);
-  console.log("sessionToken", sessionToken);
-
-
-
   const { data: restaurant, error: menusError } = await getPlaceDetails(
     restaurantId,
     ["displayName", "photos", "primaryType"],
     sessionToken
   );
 
-
-
-  console.log("レストラン", restaurant);
-
   const primaryType = restaurant?.primaryType
-  console.log('primaryType', primaryType)
-
   const { data: categoryMenus, error: munusError } = primaryType ? await fetchCategoryMenus(primaryType, searchMenu) : { data: [] };
-
-
   if (!restaurant) notFound();
-  // ✅ notFound() を明示的に呼ぶと 404 に遷移する
-  // ✅ この場合 error.tsx は使われない
-  // ✅ not-found.tsx があればそれが表示
-  // ✅ なければ Next.js デフォルト 404
-
   return (
     <>
       <div className="pt-[78px] max-xl:pt-32 max-md:pt-[201px]">

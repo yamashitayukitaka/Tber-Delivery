@@ -6,7 +6,6 @@ export const calculateSubtotal = (cartItems: CartItem[]) => cartItems.reduce((su
 
 
 export function computeCartDisplayLogic(carts: Cart[] | undefined, selectedCart: Cart | null, targetCart: Cart | null) {
-  // ✅可読性の観点からネストが深くなるので三項演算子を使わないで条件分岐した
   if (!carts || carts.length === 0) {
     return { displayMode: 'cartSheet', sheetCart: null, cartCount: 0 };
   }

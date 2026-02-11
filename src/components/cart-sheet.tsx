@@ -13,12 +13,12 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+// import {
+//   Tooltip,
+//   TooltipContent,
+//   TooltipProvider,
+//   TooltipTrigger,
+// } from "@/components/ui/tooltip"
 import { updateCartItemAction } from "@/app/(private)/actions/cartAction";
 import { KeyedMutator } from "swr";
 import { calculateItemTotal } from "@/lib/cart/utils";
@@ -33,11 +33,7 @@ interface CartSheetProps {
 }
 
 export default function CartSheet({ cart, count, isOpen, closeCart, openCart, mutateCart }: CartSheetProps) {
-  console.log('CartSheet cart', cart);
-  console.log('CartSheet count', count);
-  console.log('CartSheet cart_items', cart?.cart_items,);
 
-  // const calculateItemTotal = (item: CartItem) => item.menus.price * item.quantity;
   const calculateSubtotal = (cartItem: CartItem[]) => cartItem.reduce((sum, item) => sum + calculateItemTotal(item), 0);
   const handleUpdateCartItem = async (value: string, cartItemId: number) => {
     if (!cart) {

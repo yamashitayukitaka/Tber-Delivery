@@ -25,7 +25,6 @@ export async function fetchOrders(): Promise<Order[]> {
   }
 
   const promises = orders.map(async (order): Promise<Order> => {
-    // ✅map関数内でawaitを使うときは,map関数にasyncを付ける
     const { data: restaurantData, error } = await getPlaceDetails(order.restaurant_id, ['displayName', 'photos'])
 
     if (!restaurantData || error) {
@@ -45,8 +44,6 @@ export async function fetchOrders(): Promise<Order[]> {
       restaurantName: restaurantData?.displayName ?? '不明なお店',
       photoUrl: restaurantData?.photoUrl ?? '/no_image.png',
     };
-    // ✅アロー関数で {} を使うと「関数ブロック」として解釈されるため、
-    // オブジェクト✅返したい場合は return を使うか、() で包む必要が✅る
   });
 
   const results = await Promise.all(promises)

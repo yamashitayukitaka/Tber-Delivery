@@ -1,11 +1,4 @@
 'use client'
-// ✅イベントハンドラ（関数）をpropsとして子コンポーネントに渡しているため
-// このコンポーネントもClient Componentである必要がある
-// Server Component では、イベントハンドラを
-// JSX の props として渡すことはできない
-
-// ★イベントリスナーで呼び出される関数をイベントハンドラーという
-
 import CategorySidebar from "./category-sidebar";
 import { categoryMenu } from "@/types";
 import Section from "./section";
@@ -29,8 +22,6 @@ export default function MenuContent({ categoryMenus, restaurantId }: MenuContent
   const { isOpen, openModal, closeModal, selectedItem } = useModal()
   const { targetCart, mutateCart } = useCart(restaurantId, false);
   const [activeCategoryId, setActiveCategoryId] = useState(categoryMenus[0].id)
-  // ✅reactの設計概念として通常、stateは親コンポーネントで管理して 子コンポネントにpropsで渡す
-  // React は Top-down（上から下） のデータフローを前提にしています。
   const { openCart } = useCartVisibility();
 
   const handleSelectCategory = (categoryId: string) => {
@@ -38,7 +29,6 @@ export default function MenuContent({ categoryMenus, restaurantId }: MenuContent
     const element = document.getElementById(`${categoryId}-menu`)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
-      // scrollIntoView は DOM Element に標準で定義されているメソッド
       setActiveCategoryId(categoryId)
     }
   }
@@ -61,10 +51,6 @@ export default function MenuContent({ categoryMenus, restaurantId }: MenuContent
             onChange={(inView) => inView && setActiveCategoryId(category.id)
             }
           >
-
-            {/* ✅id や className は「文字列として扱われる必要がある */}
-            {/* scroll-mt-16は要素にスクロールで飛んできたとき、上に 4rem 分の余白を確保するための指定 */}
-            {/* 通常レイアウトには影響せず、スクロールの“到達位置”にだけ余白が効く */}
             <Section title={category.categoryName}>
               {category.id === 'featured' ? (
                 <CarouselContainer slideToShow={4}>
@@ -72,7 +58,6 @@ export default function MenuContent({ categoryMenus, restaurantId }: MenuContent
                     <MenuCard
                       menu={menu}
                       onClick={openModal}
-                    // ?なぜuseContextを使ってるのにわざわざPropsの受け渡しをするのか
                     />
                   ))}
                 </CarouselContainer>
@@ -82,7 +67,6 @@ export default function MenuContent({ categoryMenus, restaurantId }: MenuContent
                     <FlatMenuCard
                       menu={menu}
                       key={menu.id}
-                      // ✅keyはpropsではなくコンポネント自体に渡している
                       onClick={openModal}
                     />
                   ))}
