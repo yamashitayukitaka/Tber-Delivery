@@ -60,19 +60,12 @@ export default function MenuModal({ isOpen, closeModal, selectedItem, restaurant
     fetchUser()
   }, [])
 
-
-
-
-
-
-
   const handleAddToCart = async () => {
     if (!selectedItem) {
       return;
     }
     try {
       const response = await addToCartAction(selectedItem, quantity, restaurantId);
-      // ✅サーバーアクションは呼び出し側でtry　catchを使うのはデフォルト
       mutateCart(
         (prevCarts: Cart[] | undefined) => {
           if (!prevCarts) return;
@@ -111,13 +104,6 @@ export default function MenuModal({ isOpen, closeModal, selectedItem, restaurant
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && closeModal()}>
-      {/* open が true の場合
-      !open は false
-      false && closeModal() → 短絡評価により closeModal() は呼ばれない
-      open が false の場合
-      !open は true
-      true && closeModal() → closeModal() が実行される
-      つまり Dialog が閉じられるときのみ closeModal() が呼ばれる 仕組み */}
       <DialogContent className="lg:max-w-4xl">
         {selectedItem && (
           <>

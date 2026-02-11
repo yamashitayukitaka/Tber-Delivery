@@ -1,9 +1,3 @@
-// ✅Next.jsで用意されているエラーが発生した場合に表示されるページ
-
-// --------------------------------------
-// ✅以下Next.js公式ドキュメントのエラー処理ページに記載されているapp/dashboard/error.tsxを参考に実装
-
-
 'use client' // Error boundaries must be Client Components
 
 import { useEffect } from 'react'

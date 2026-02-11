@@ -7,7 +7,6 @@ import { categoryMenu } from "@/types"
 interface CategorySidebarProps {
   categoryMenus: categoryMenu[]
   onSelectCategory: (categoryId: string) => void
-  // ✅引数としてstring型のcategoryIdを受け取る。voidは戻り値が無いことを表す。
   activeCategoryId: string
 }
 

@@ -33,17 +33,6 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
   )
 }
 
-
-// ✅カスタムフックスの条件
-// state を使う
-// JSXを返さないことが多い
-// レンダリングに関与する
-// 関数に非常によく似ている
-
-// ✅カスタムフックとは
-// Reactのレンダリングサイクルに参加するロジックを、
-// 通常の関数の形で再利用可能にしたもの
-
 export const useModal = () => {
   const context = useContext(ModalContext)
   if (!context) {
