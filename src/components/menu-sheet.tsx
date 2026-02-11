@@ -78,9 +78,6 @@ const MenuSheet = async () => {
           </div>
           <div>
             <div>{full_name}</div>
-            <div>
-              <Link href={"#"} className="text-green-500 text-xs">アカウントを管理する</Link>
-            </div>
           </div>
         </div>
 
@@ -90,12 +87,6 @@ const MenuSheet = async () => {
             <Link href={"/orders"} className="flex items-center gap-4">
               <Bookmark fill="bg-primary" />
               <span className="font-bold">ご注文内容</span>
-            </Link>
-          </li>
-          <li>
-            <Link href={"#"} className="flex items-center gap-4">
-              <Heart fill="bg-primary" />
-              <span className="font-bold">お気に入り</span>
             </Link>
           </li>
         </ul>

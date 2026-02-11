@@ -44,13 +44,13 @@ export default function MenuContent({ categoryMenus, restaurantId }: MenuContent
   }
 
   return (
-    <div className="flex  gap-4 ">
+    <div className="flex gap-4 max-xl:flex-col">
       <CategorySidebar
         categoryMenus={categoryMenus}
         onSelectCategory={handleSelectCategory}
         activeCategoryId={activeCategoryId}
       />
-      <div className="w-3/4">
+      <div className="w-3/4 max-xl:w-full">
         {categoryMenus.map((category) => (
           <InView
             className="scroll-mt-16"
