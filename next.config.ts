@@ -21,6 +21,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'foeurupnttdmxitwdmce.supabase.co',
       },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com', // 追加
+      },
     ],
   },
   reactStrictMode: false,

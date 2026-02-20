@@ -12,7 +12,6 @@ import { useModal } from "@/app/context/modalContext";
 import { useCartVisibility } from "@/app/context/cartContext";
 import { useCart } from "@/hooks/cart/useCart";
 
-
 interface MenuContentProps {
   categoryMenus: categoryMenu[];
   restaurantId: string
@@ -40,6 +39,7 @@ export default function MenuContent({ categoryMenus, restaurantId }: MenuContent
         onSelectCategory={handleSelectCategory}
         activeCategoryId={activeCategoryId}
       />
+
       <div className="w-3/4 max-xl:w-full">
         {categoryMenus.map((category) => (
           <InView

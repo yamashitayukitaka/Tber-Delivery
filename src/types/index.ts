@@ -150,3 +150,15 @@ export interface OrderItem {
   price: number;
   name: string;
 }
+
+export interface CommentItem {
+  avatar_url: string
+  comment: string
+  created_at: string
+  full_name: string
+  id: number
+  restaurant_id: string
+  star: number
+  updated_at: string
+  user_id: string
+}
