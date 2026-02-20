@@ -23,7 +23,7 @@ export default function MenuSearchBar() {
   }, 500);
 
   return (
-    <div className="flex items-center bg-muted rounded-full">
+    <div className="flex items-center bg-muted rounded-md">
       <Search size={20} color="gray" className="ml-2" />
       <input
         type="text"
