@@ -9,6 +9,7 @@ import { fetchMenus } from "@/lib/menus/api";
 import MenuList from "@/components/menu-list";
 import MenuCard from "@/components/menu-card";
 import Image from "next/image";
+import { getAverageStars } from "@/lib/comments/api";
 
 export default async function Home() {
   const { lat, lng } = await fetchLocation();
@@ -16,7 +17,16 @@ export default async function Home() {
   const { data: nearbyRestaurants, error: restaurantsError } = await fetchRestaurants(lat, lng);
   const restaurant = nearbyRamenRestaurants?.[0];
   const primaryType = restaurant?.primaryType;
-  console.log('primaryType', primaryType)
+  const nearbyRestaurantsIds = nearbyRestaurants?.map(r => r.id) || [];
+  const nearbyRamenRestaurantsIds = nearbyRamenRestaurants?.map(r => r.id) || [];
+  const { averageStars, error } = await getAverageStars(nearbyRestaurantsIds);
+  if (error) {
+    console.error("averageStars error:", error);
+  }
+  const { averageStars: ramenAverageStars, error: ramenAverageStarsError } = await getAverageStars(nearbyRamenRestaurantsIds);
+  if (ramenAverageStarsError) {
+    console.error("ramenAverageStars error:", ramenAverageStarsError);
+  }
   const { data: menus, error: menusError } = primaryType ? await fetchMenus(primaryType) : { data: [] };
   return (
     <div className="pt-[78px] max-xl:pt-32 max-md:pt-[201px]">
@@ -50,11 +60,16 @@ export default async function Home() {
           {!nearbyRestaurants ? (
             <p>{restaurantsError}</p>
           ) : nearbyRestaurants.length > 0 ? (
-            <Section title="近くのお店" expandedContent={<RestaurantList restaurants={nearbyRestaurants} />}>
+            <Section title="近くのお店" expandedContent={<RestaurantList restaurants={nearbyRestaurants} averageStars={averageStars} />}>
               <CarouselContainer slideToShow={4}>
-                {nearbyRestaurants.map((restaurant) => (
-                  <RestaurantCard restaurant={restaurant} key={restaurant.id} />
-                ))}
+                {nearbyRestaurants.map((restaurant) => {
+                  const starData = averageStars?.find(
+                    (s) => s.restaurant_id === restaurant.id
+                  );
+                  return (
+                    <RestaurantCard restaurant={restaurant} key={restaurant.id} averageStar={starData?.averageStar} />
+                  );
+                })}
               </CarouselContainer>
             </Section>
           ) : (
@@ -67,11 +82,16 @@ export default async function Home() {
             <p>{nearbyRamenRestaurantError}</p>
           ) : nearbyRamenRestaurants.length > 0 ? (
 
-            <Section title="近くのラーメン店" expandedContent={<RestaurantList restaurants={nearbyRamenRestaurants} />}>
+            <Section title="近くのラーメン店" expandedContent={<RestaurantList restaurants={nearbyRamenRestaurants} averageStars={ramenAverageStars} />}>
               <CarouselContainer slideToShow={4}>
-                {nearbyRamenRestaurants.map((restaurant) => (
-                  <RestaurantCard restaurant={restaurant} key={restaurant.id} />
-                ))}
+                {nearbyRamenRestaurants.map((restaurant) => {
+                  const starData = ramenAverageStars?.find(
+                    (s) => s.restaurant_id === restaurant.id
+                  );
+                  return (
+                    <RestaurantCard restaurant={restaurant} key={restaurant.id} averageStar={starData?.averageStar} />
+                  );
+                })}
               </CarouselContainer>
             </Section>
 
