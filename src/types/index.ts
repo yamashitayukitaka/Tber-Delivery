@@ -162,3 +162,8 @@ export interface CommentItem {
   updated_at: string
   user_id: string
 }
+
+export interface AverageStar {
+  restaurant_id: string;
+  averageStar: number;
+}
