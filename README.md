@@ -24,7 +24,9 @@ Tber-Deliveryは、近隣のラーメン・レストラン情報を検索・閲�
 - API: Google Places API
 - その他:レスポンシブデザイン対応
 
-## 🛠　主な機能
+---
+
+## ✨　主な機能
 
 ### フロントエンド
 - トップページ: 近隣店舗カルーセル、カテゴリ検索、キーワード予測
@@ -38,21 +40,9 @@ Tber-Deliveryは、近隣のラーメン・レストラン情報を検索・閲�
 - Google Places APIによる店舗情報取得
 - エラーハンドリング、レスポンス最適化
 
-
 ### その他
 - pnpm（パッケージ管理）
 - Vercel（デプロイ）
-
----
-
-## ✨ 主な機能
-
-- ユーザー認証（ログイン / 新規登録）
-- Stripe を用いた決済処理（テストモード）
-- 位置情報を用いた店舗検索
-- カート機能（追加・削除・合計金額表示）
-- 認証状態に応じた UI の出し分け
-- レスポンシブ対応 UI
 
 ---
 
@@ -94,11 +84,9 @@ GOOGLE_API_KEY=
 STRIPE_SECRET_KEY=
   ```
 
-
 データベースER図
 https://www.figma.com/board/XldurHHcUNWb07s3K0UxEs/Untitled?node-id=1-5&t=3nUXMsM4WrLPrcZx-1
 <img width="1392" height="1055" alt="Image" src="https://github.com/user-attachments/assets/6461b4e6-0d39-436a-a93f-0bde5c41513b" />
-
 
 ## 今後の改善
 
