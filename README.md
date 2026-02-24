@@ -31,6 +31,8 @@ Tber-Delivery は、ユーザーが現在地周辺の店舗を検索し、
 
 ### 外部サービス
 - Stripe（決済）
+- Places API 
+
 
 ### その他
 - pnpm（パッケージ管理）
