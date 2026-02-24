@@ -10,28 +10,33 @@ https://tber-delivery.vercel.app/
 
 ## 🚀 概要
 
-Tber-Delivery は、ユーザーが現在地周辺の店舗を検索し、  
-商品をカートに追加して注文・決済まで行えるフードデリバリー Web アプリです。
+Tber-Deliveryは、近隣のラーメン・レストラン情報を検索・閲覧・注文できるフルスタックWebアプリです。
+ユーザーは住所やカテゴリでレストランを検索し、カート・決済・履歴確認・コメント・評価まで可能です。
 
 ---
 
 ## 🛠 技術スタック
 
 ### フロントエンド
-- Next.js（App Router）
-- React
-- TypeScript
-- Tailwind CSS
-- clsx
+- フロントエンド: Next.js, TypeScript, TailWindCSS
+- バックエンド: Supabase (認証、DB)
+- 決済: Stripe Checkout + サービス手数料反映
+- API: Google Places API
+- その他:レスポンシブデザイン対応
 
-### バックエンド / BaaS
-- Supabase  
-  - Auth（認証）
-  - Database
+## 🛠　主な機能
 
-### 外部サービス
-- Stripe（決済）
-- Places API 
+### フロントエンド
+- トップページ: 近隣店舗カルーセル、カテゴリ検索、キーワード予測
+- レストラン詳細: コメント・評価機能
+- 注文フロー: カート管理、履歴確認
+- ユーザー認証: メール・パスワード + OAuth
+
+### バックエンド/API
+- Supabase認証 & DB管理
+- Stripe決済 + 注文データ確定
+- Google Places APIによる店舗情報取得
+- エラーハンドリング、レスポンス最適化
 
 
 ### その他
@@ -90,11 +95,13 @@ STRIPE_SECRET_KEY=
   ```
 
 
-
-
 データベースER図
 https://www.figma.com/board/XldurHHcUNWb07s3K0UxEs/Untitled?node-id=1-5&t=3nUXMsM4WrLPrcZx-1
 <img width="1392" height="1055" alt="Image" src="https://github.com/user-attachments/assets/6461b4e6-0d39-436a-a93f-0bde5c41513b" />
 
 
+## 今後の改善
 
+- フロント・バックのパフォーマンス最適化
+- API呼び出しのキャッシュ・再利用性向上
+- 地図API表示
