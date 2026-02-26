@@ -13,6 +13,10 @@ export interface PlaceSearchResult {
   }
   primaryType?: string;
   photos?: PlacePhoto[];
+  location?: {
+    latitude?: number;
+    longitude?: number;
+  }
 }
 
 export interface PlacePhoto {
@@ -25,6 +29,10 @@ export interface Restaurant {
   restaurantName?: string;
   primaryType?: string;
   photoUrl: any;
+  location?: {
+    latitude?: number;
+    longitude?: number;
+  }
 }
 
 export interface GooglePlacesAutoCompleteResponse {
@@ -166,4 +174,11 @@ export interface CommentItem {
 export interface AverageStar {
   restaurant_id: string;
   averageStar: number;
+}
+
+export interface MapPlace {
+  id: string;
+  restaurantName: string;
+  lat?: number;
+  lng?: number;
 }

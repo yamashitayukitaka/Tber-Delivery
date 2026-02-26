@@ -10,11 +10,47 @@ import MenuList from "@/components/menu-list";
 import MenuCard from "@/components/menu-card";
 import Image from "next/image";
 import { getAverageStars } from "@/lib/comments/api";
+import { MapPlace } from "@/types";
+import MapContent from "@/components/map-content";
+
+
 
 export default async function Home() {
   const { lat, lng } = await fetchLocation();
   const { data: nearbyRamenRestaurants, error: nearbyRamenRestaurantError } = await fetchRamenRestaurants(lat, lng);
   const { data: nearbyRestaurants, error: restaurantsError } = await fetchRestaurants(lat, lng);
+  // どちらの配列もMapPlace型に変換
+  const ramenPlaces: MapPlace[] = nearbyRamenRestaurants
+    ?.filter(r => r.location?.latitude != null && r.location?.longitude != null)
+    .map(r => ({
+      id: r.id,
+      restaurantName: r.restaurantName || '',
+      lat: r.location?.latitude!,
+      lng: r.location?.longitude!,
+    })) || [];
+
+  const otherPlaces: MapPlace[] = nearbyRestaurants
+    ?.filter(r => r.location?.latitude != null && r.location?.longitude != null)
+    .map(r => ({
+      id: r.id,
+      restaurantName: r.restaurantName || '',
+      lat: r.location?.latitude!,
+      lng: r.location?.longitude!,
+    })) || [];
+
+  // ramenPlaces と otherPlaces は MapPlace[]
+  const allPlaces = [...ramenPlaces, ...otherPlaces];
+
+  // id で重複を除く
+  const mapPlaces: MapPlace[] = Object.values(
+    allPlaces.reduce<Record<string, MapPlace>>((acc, place) => {
+      if (!acc[place.id]) {
+        acc[place.id] = place;
+      }
+      return acc;
+    }, {})
+  );
+
   const restaurant = nearbyRamenRestaurants?.[0];
   const primaryType = restaurant?.primaryType;
   const nearbyRestaurantsIds = nearbyRestaurants?.map(r => r.id) || [];
@@ -40,7 +76,7 @@ export default async function Home() {
           sizes="(max-width:1280px) 100vw, 1920px"
         />
       </div>
-
+      <MapContent lat={lat} lng={lng} places={mapPlaces} />
       <div className="max-w-7xl mx-auto px-10 py-5">
         <Categories />
       </div>
@@ -50,7 +86,7 @@ export default async function Home() {
           className="object-cover -z-10"
           id="main-visual"
           src="/images/top/img01.png"
-          alt="メインビジュアル"
+          alt="背景画像"
           fill
           priority
           sizes="(max-width:1280px) 100vw, 1920px"
