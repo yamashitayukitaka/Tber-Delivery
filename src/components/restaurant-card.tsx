@@ -7,7 +7,7 @@ interface RestaurantCardProps {
 }
 
 export default function RestaurantCard({ restaurant, averageStar }: RestaurantCardProps) {
-  console.log("Rendering RestaurantCard for:", restaurant.restaurantName, "with average star:", averageStar);
+
   return (
     <div className='relative'>
       <Link href={`/restaurant/${restaurant.id}`} className='inset-0 absolute z-20 block'></Link>

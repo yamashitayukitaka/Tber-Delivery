@@ -11,7 +11,7 @@ export async function fetchRestaurants(lat: number, lng: number) {
   const header = {
     "Content-Type": "application/json",
     "X-Goog-Api-Key": apiKey,
-    "X-Goog-FieldMask": "places.id,places.displayName,places.types,places.primaryType,places.photos",
+    "X-Goog-FieldMask": "places.id,places.displayName,places.types,places.primaryType,places.photos,places.location",
   };
 
 
@@ -87,7 +87,7 @@ export async function fetchRamenRestaurants(lat: number, lng: number) {
   const header = {
     "Content-Type": "application/json",
     "X-Goog-Api-Key": apiKey,
-    "X-Goog-FieldMask": "places.id,places.displayName,places.primaryType,places.photos",
+    "X-Goog-FieldMask": "places.id,places.displayName,places.primaryType,places.photos,places.location",
   };
   const requestBody = {
     includedPrimaryTypes: ["ramen_restaurant"],
@@ -125,7 +125,7 @@ export async function fetchRamenRestaurants(lat: number, lng: number) {
   }
 
   const data: GooglePlacesSearchApiResponse = await response.json();
-  console.log(data)
+
 
   if (!data.places) {
     return { data: [] }
@@ -340,6 +340,10 @@ export async function fetchLocation() {
       `)
     .eq('id', user.id)
     .single()
+
+  if (!selectedAddress || selectedAddress.addresses === null) {
+    return { lat: DEFAULT_LOCATION.lat, lng: DEFAULT_LOCATION.lng };
+  }
   if (selectedAddressError) {
     console.error('緯度と経度の取得に失敗しました', selectedAddressError);
     throw new Error('緯度と経度の取得に失敗しました');

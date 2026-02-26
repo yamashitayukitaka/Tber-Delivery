@@ -63,7 +63,6 @@ export const getAverageStars = async (restaurantIds: string[]) => {
     };
 
     const averages = calculateAverageStars(grouped);
-    console.log('averages:', averages);
     return { averageStars: averages };
   }
 }

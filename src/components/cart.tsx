@@ -16,11 +16,11 @@ export default function Cart() {
   const [selectedCart, setSelectedCart] = useState<Cart | null>(null);
   const { isOpen, openCart, closeCart } = useCartVisibility();
   const { restaurantId } = useParams<{ restaurantId: string }>();
-  console.log('restaurantId', restaurantId);
+
   const { carts, isLoading, cartsError, targetCart, mutateCart } = useCart(restaurantId);
 
   const { displayMode, sheetCart, cartCount } = computeCartDisplayLogic(carts, selectedCart, targetCart);
-  console.log('carts', carts);
+
 
 
 

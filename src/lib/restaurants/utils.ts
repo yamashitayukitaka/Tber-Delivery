@@ -7,6 +7,7 @@ export async function transformPlaceResults(restaurants: PlaceSearchResult[]) {
       id: restaurant.id,
       restaurantName: restaurant.displayName?.text,
       primaryType: restaurant.primaryType,
+      location: restaurant.location,
       photoUrl: restaurant.photos?.[0]?.name
         ? await getPhotoUrl(restaurant.photos[0].name)
         : "/no_image.png",
