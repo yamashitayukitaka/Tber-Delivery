@@ -181,4 +181,5 @@ export interface MapPlace {
   restaurantName: string;
   lat?: number;
   lng?: number;
+  photoUrl?: string;
 }
