@@ -11,6 +11,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  turbopack: false,
   images: {
     remotePatterns: [
       {
