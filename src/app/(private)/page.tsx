@@ -13,8 +13,6 @@ import { getAverageStars } from "@/lib/comments/api";
 import { MapPlace } from "@/types";
 import MapContent from "@/components/map-content";
 
-
-
 export default async function Home() {
   const { lat, lng } = await fetchLocation();
   const { data: nearbyRamenRestaurants, error: nearbyRamenRestaurantError } = await fetchRamenRestaurants(lat, lng);
@@ -27,6 +25,7 @@ export default async function Home() {
       restaurantName: r.restaurantName || '',
       lat: r.location?.latitude!,
       lng: r.location?.longitude!,
+      photoUrl: r.photoUrl,
     })) || [];
 
   const otherPlaces: MapPlace[] = nearbyRestaurants
@@ -36,6 +35,7 @@ export default async function Home() {
       restaurantName: r.restaurantName || '',
       lat: r.location?.latitude!,
       lng: r.location?.longitude!,
+      photoUrl: r.photoUrl,
     })) || [];
 
   // ramenPlaces と otherPlaces は MapPlace[]
