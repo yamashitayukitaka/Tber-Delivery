@@ -32,7 +32,10 @@ export default function CarouselContainer({ children, slideToShow, variant }: Ca
           setSlides(slideToShow);
         }
       } else {
-        if (window.innerWidth <= 1200) {
+        if (window.innerWidth <= 768) {
+          setSlides(1);
+        }
+        else if (window.innerWidth <= 1200) {
           setSlides(2);
         } else {
           setSlides(slideToShow);
