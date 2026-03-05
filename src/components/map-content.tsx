@@ -23,7 +23,7 @@ export default function MapContent({ lat, lng, places }: MapContentProps) {
     <GoogleMap
       mapContainerStyle={{ width: '100%', height: '500px' }}
       center={{ lat, lng }}
-      zoom={16}
+      zoom={15}
     >
       <Marker position={{ lat, lng }} title="現在地" />
       {places

@@ -145,7 +145,7 @@ export async function fetchCategoryRestaurants(category: string, lat: number, ln
   const header = {
     "Content-Type": "application/json",
     "X-Goog-Api-Key": apiKey,
-    "X-Goog-FieldMask": "places.id,places.displayName,places.primaryType,places.photos",
+    "X-Goog-FieldMask": "places.id,places.displayName,places.primaryType,places.photos,places.location",
   };
   const requestBody = {
     includedPrimaryTypes: [category],
@@ -203,7 +203,7 @@ export async function fetchRestaurantsByKeyword(query: string, lat: number, lng:
   const header = {
     "Content-Type": "application/json",
     "X-Goog-Api-Key": apiKey,
-    "X-Goog-FieldMask": "places.id,places.displayName,places.primaryType,places.photos",
+    "X-Goog-FieldMask": "places.id,places.displayName,places.primaryType,places.photos,places.location",
   };
   const requestBody = {
     textQuery: query,
