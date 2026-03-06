@@ -26,9 +26,9 @@ export default async function SearchPage({
       })) || [];
 
     return (
-      <>
+      <div className="py-[77px] max-xl:py-32 max-md:py-[201.13px]">
         <MapContent lat={lat} lng={lng} places={categoryMapPlaces} />
-        <div className="max-w-7xl mx-auto px-10 py-24">
+        <div className="max-w-7xl mx-auto px-10 py-5">
 
           <div className="mb-4">
             <Categories />
@@ -45,7 +45,7 @@ export default async function SearchPage({
             </p>
           )}
         </div>
-      </>
+      </div>
     );
   } else if (restaurant) {
     const { data: restaurants, error: fetchError } = await fetchRestaurantsByKeyword(restaurant, lat, lng);

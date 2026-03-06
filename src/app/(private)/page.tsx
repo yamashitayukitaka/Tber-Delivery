@@ -76,7 +76,7 @@ export default async function Home() {
           sizes="(max-width:1280px) 100vw, 1920px"
         />
       </div>
-      <MapContent lat={lat} lng={lng} places={mapPlaces} />
+
       <div className="max-w-7xl mx-auto px-10 py-5">
         <Categories />
       </div>
@@ -155,6 +155,7 @@ export default async function Home() {
           )}
         </div>
       </div>
+      <MapContent lat={lat} lng={lng} places={mapPlaces} />
     </div>
   );
 }
