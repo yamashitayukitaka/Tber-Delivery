@@ -178,7 +178,7 @@ export interface AverageStar {
 
 export interface MapPlace {
   id: string;
-  restaurantName: string;
+  restaurantName?: string;
   lat?: number;
   lng?: number;
 }
