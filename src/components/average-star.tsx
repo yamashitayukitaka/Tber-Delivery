@@ -1,6 +1,17 @@
+'use client'
 
+import { commentFetcher } from "@/lib/comments/fetcher";
 import { CommentItem } from "@/types";
-export default function CommentsAverage({ comments }: { comments: CommentItem[] }) {
+import useSWR from "swr";
+
+
+export default function CommentsAverage({ restaurantId }: { restaurantId: string }) {
+  const { data: comments, error } = useSWR<CommentItem[]>(`/api/comments/${restaurantId}`, commentFetcher)
+
+  if (error || !comments) {
+    console.log("評価の取得に失敗", error)
+    return <div className="mt-8">評価の取得に失敗しました</div>
+  }
   const averageStar =
     comments.length === 0
       ? 0
@@ -18,8 +29,8 @@ export default function CommentsAverage({ comments }: { comments: CommentItem[] 
           </span>
         ))}
       </div>
-      <span className="ml-2 text-sm text-gray-500"> {comments.length === 0
-        ? ""
+      <span className="ml-2 text-sm text-yellow-400"> {comments.length === 0
+        ? "まだ評価はありません"
         : `${comments.length} 件の評価`}</span>
     </div>
   )

@@ -1,10 +1,11 @@
 'use client'
+import { commentFetcher } from "@/lib/comments/fetcher";
 import CommentsModal from "./comments-modal";
 import Comments from "@/components/comments";
 import { CommentItem } from "@/types";
 import Link from "next/link";
 import useSWR from "swr";
-import CommentsAverage from "./average-star";
+
 
 interface CommentsContainerProps {
   restaurantId: string;
@@ -13,16 +14,7 @@ interface CommentsContainerProps {
 
 export default function CommentsContainer({ restaurantId, user }: CommentsContainerProps) {
 
-  const fetcher = async (url: string): Promise<CommentItem[]> => {
-    const res = await fetch(url)
-    const data = await res.json()
-    if (!res.ok) {
-      throw new Error(data.error || "コメントの取得に失敗しました")
-    }
-    return data.comments
-  }
-
-  const { data, error, isLoading, mutate } = useSWR<CommentItem[]>(`/api/comments/${restaurantId}`, fetcher)
+  const { data, error, isLoading, mutate } = useSWR<CommentItem[]>(`/api/comments/${restaurantId}`, commentFetcher)
   // /api/comments/${restaurantId}が const fetcher = async (url: string) => のurlに渡される
 
   if (isLoading) {
@@ -46,9 +38,9 @@ export default function CommentsContainer({ restaurantId, user }: CommentsContai
               コメントする
             </Link>
           )}
-        <div className="ml-3.5">
+        {/* <div className="ml-3.5">
           <CommentsAverage comments={data} />
-        </div>
+        </div> */}
 
       </div>
       <Comments comments={data} user={user} mutate={mutate} />
