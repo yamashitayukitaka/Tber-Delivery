@@ -56,7 +56,7 @@ export default async function RestaurantPage({
             priority
             sizes="(max-width: 1280px) 100vw, 1200px"
           />
-          <div className="absolute left-[8%] top-[95%] w-full transform -translate-y-full">
+          <div className="absolute left-[8%] top-[95%]  transform -translate-y-full bg-black/60 inline-block py-2 px-3.5">
             <h1 className="text-3xl font-bold text-white">{restaurant.displayName}</h1>
             <CommentsAverage restaurantId={restaurantId} />
           </div>

@@ -75,9 +75,14 @@ export default async function Home() {
           priority
           sizes="(max-width:1280px) 100vw, 1920px"
         />
+        <h2 className="absolute top-[50%] left-[50%] text-white transform -translate-x-1/2 -translate-y-1/2 z-20 font-bold text-[40px] text-center bg-black/50 px-3 py-8 max-lg:w-[80%] max-lg:text-[24px]">
+          位置情報から<br className="hidden max-sm:block" />飲食店を検索し<br />
+          注文・決済まで行える<br className="hidden max-sm:block" />フードデリバリーアプリ
+        </h2>
       </div>
 
-      <div className="max-w-7xl mx-auto px-10 py-5">
+
+      <div className="max-w-7xl mx-auto px-10 py-[50px]">
         <Categories />
       </div>
 

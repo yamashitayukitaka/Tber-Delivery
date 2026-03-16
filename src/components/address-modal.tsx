@@ -149,10 +149,10 @@ export default function AddressModal() {
       gap-2 
       px-4 py-2 
       rounded-md 
-      bg-blue-500 
+      bg-blue-600
       text-white 
       font-medium 
-      hover:bg-blue-600 
+      hover:opacity-60
       focus:outline-none 
       focus:ring-2 
       focus:ring-blue-400 

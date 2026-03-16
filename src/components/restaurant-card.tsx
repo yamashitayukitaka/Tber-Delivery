@@ -9,7 +9,7 @@ interface RestaurantCardProps {
 export default function RestaurantCard({ restaurant, averageStar }: RestaurantCardProps) {
 
   return (
-    <div className='relative'>
+    <div className='relative hover:opacity-60'>
       <Link href={`/restaurant/${restaurant.id}`} className='inset-0 absolute z-20 block'></Link>
       <div className="relative aspect-5/4 overflow-hidden">
         <Image

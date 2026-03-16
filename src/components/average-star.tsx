@@ -10,7 +10,7 @@ export default function CommentsAverage({ restaurantId }: { restaurantId: string
 
   if (error || !comments) {
     console.log("評価の取得に失敗", error)
-    return <div className="mt-8">評価の取得に失敗しました</div>
+    return;
   }
   const averageStar =
     comments.length === 0
@@ -21,14 +21,18 @@ export default function CommentsAverage({ restaurantId }: { restaurantId: string
 
   return (
     <div className="flex items-center">
-      <span className="text-2xl font-bold">{rounded}</span>
-      <div className="flex ml-2">
-        {[1, 2, 3, 4, 5].map(star => (
-          <span key={star} className={star <= rounded ? "text-yellow-400" : "text-gray-300"}>
-            ★
-          </span>
-        ))}
-      </div>
+      {comments.length > 0 && (
+        <>
+          <span className="text-2xl font-bold text-yellow-400">{rounded}</span>
+          <div className="flex ml-2">
+            {[1, 2, 3, 4, 5].map(star => (
+              <span key={star} className={star <= rounded ? "text-yellow-400" : "text-gray-300"}>
+                ★
+              </span>
+            ))}
+          </div>
+        </>
+      )}
       <span className="ml-2 text-sm text-yellow-400"> {comments.length === 0
         ? "まだ評価はありません"
         : `${comments.length} 件の評価`}</span>
