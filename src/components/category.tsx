@@ -13,7 +13,7 @@ interface CategoryProps {
 
 export default function Category({ category, onClick, select }: CategoryProps) {
   return (
-    <div onClick={() => onClick(category.type)} className="cursor-pointer">
+    <div onClick={() => onClick(category.type)} className="cursor-pointer hover:opacity-60">
       <div className={cn("relative aspect-square overflow-hidden rounded-full", select && "bg-green-200")}>
         <Image
           className="object-cover scale-75"
