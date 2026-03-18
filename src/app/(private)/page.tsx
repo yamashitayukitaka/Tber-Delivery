@@ -81,6 +81,7 @@ export default async function Home() {
         </h2>
       </div>
 
+      <MapContent lat={lat} lng={lng} places={mapPlaces} />
 
       <div className="max-w-7xl mx-auto px-10 py-[50px]">
         <Categories />
@@ -160,7 +161,6 @@ export default async function Home() {
           )}
         </div>
       </div>
-      <MapContent lat={lat} lng={lng} places={mapPlaces} />
     </div>
   );
 }
