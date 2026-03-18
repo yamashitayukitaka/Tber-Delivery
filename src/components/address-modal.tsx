@@ -100,7 +100,7 @@ export default function AddressModal() {
       await selectSuggestionAction(suggestion, sessionToken);
       setSessionToken(uuidv4());
       setInputText('');
-      mutate();
+      await mutate();
       router.refresh();
     } catch (error) {
       console.error(error)
@@ -112,7 +112,7 @@ export default function AddressModal() {
     console.log('address', address)
     try {
       await selectAddressAction(address.id);
-      mutate();
+      await mutate();
       router.refresh();
     } catch (error) {
       console.error(error)
@@ -126,7 +126,7 @@ export default function AddressModal() {
     try {
       const selectedAddressId = data?.selectedAddress?.id;
       await deleteAddressAction(addressId);
-      mutate();
+      await mutate();
       if (selectedAddressId === addressId) {
         router.refresh();
       }
