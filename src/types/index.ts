@@ -28,7 +28,7 @@ export interface Restaurant {
   id: string;
   restaurantName?: string;
   primaryType?: string;
-  photoUrl: any;
+  photoUrl: string;
   location?: {
     latitude?: number;
     longitude?: number;
@@ -79,7 +79,7 @@ export interface placeDetailsAll {
   }
   displayName?: string;
   primaryType?: string;
-  photoUrl?: string
+  photoUrl?: string;
 }
 
 
@@ -181,4 +181,5 @@ export interface MapPlace {
   restaurantName?: string;
   lat?: number;
   lng?: number;
+  photoUrl?: string;
 }

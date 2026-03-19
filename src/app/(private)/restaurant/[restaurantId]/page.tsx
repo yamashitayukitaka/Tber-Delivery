@@ -33,6 +33,7 @@ export default async function RestaurantPage({
     restaurantName: restaurant?.displayName,
     lat: restaurant?.location?.latitude,
     lng: restaurant?.location?.longitude,
+    photoUrl: restaurant?.photoUrl,
   }
 
   const supabase = await createClient()

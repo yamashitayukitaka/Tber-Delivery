@@ -27,6 +27,7 @@ export default async function Home() {
       restaurantName: r.restaurantName || '',
       lat: r.location?.latitude!,
       lng: r.location?.longitude!,
+      photoUrl: r.photoUrl,
     })) || [];
 
   const otherPlaces: MapPlace[] = nearbyRestaurants
@@ -36,6 +37,7 @@ export default async function Home() {
       restaurantName: r.restaurantName || '',
       lat: r.location?.latitude!,
       lng: r.location?.longitude!,
+      photoUrl: r.photoUrl,
     })) || [];
 
   // ramenPlaces と otherPlaces は MapPlace[]

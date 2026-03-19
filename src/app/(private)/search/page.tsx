@@ -23,6 +23,7 @@ export default async function SearchPage({
         restaurantName: r.restaurantName || '',
         lat: r.location?.latitude!,
         lng: r.location?.longitude!,
+        photoUrl: r.photoUrl,
       })) || [];
 
     return (
@@ -56,6 +57,7 @@ export default async function SearchPage({
         restaurantName: r.restaurantName || '',
         lat: r.location?.latitude!,
         lng: r.location?.longitude!,
+        photoUrl: r.photoUrl,
       })) || [];
     return (
       <>
