@@ -183,3 +183,10 @@ export interface MapPlace {
   lng?: number;
   photoUrl?: string;
 }
+
+export interface SingleMapPlace {
+  id: string;
+  restaurantName?: string;
+  lat?: number;
+  lng?: number;
+}

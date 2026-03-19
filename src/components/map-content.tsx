@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { MapPlace } from '@/types';
+import { MapPlace, SingleMapPlace } from '@/types';
 import {
   APIProvider,
   Map,
   AdvancedMarker,
   Pin,
+  InfoWindow, // 追加
   useMap
 } from '@vis.gl/react-google-maps';
 import { useRouter } from 'next/navigation';
@@ -23,7 +24,7 @@ interface MapContentProps {
   lat: number;
   lng: number;
   places?: MapPlace[];
-  singlePlace?: MapPlace;
+  singlePlace?: SingleMapPlace;
 }
 
 const MapController = ({ selectedPlace }: { selectedPlace: MapPlace | null }) => {
@@ -42,17 +43,18 @@ export default function MapContent({ lat, lng, places = [], singlePlace }: MapCo
   const [isApiLoaded, setIsApiLoaded] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  // 環境変数を確実に取得
   const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '';
   const MAP_ID = process.env.NEXT_PUBLIC_MAP_ID || '';
 
-  const displayList = useMemo(() => singlePlace ? [singlePlace] : places, [singlePlace, places]);
+  const displayList = useMemo(() =>
+    (singlePlace ? [singlePlace] : places) as MapPlace[], // ここで「MapPlaceの配列だ」と言い切る
+    [singlePlace, places]
+  );
   const originalCount = displayList.length;
 
-  // 3枚以下の時、Swiperのloopを起動させるためにデータを内部で繰り返す
   const swiperItems = useMemo(() => {
-    if (originalCount > 0 && originalCount < 4) {
-      return [...displayList, ...displayList];
+    if (originalCount > 1 && originalCount < 10) {
+      return [...displayList, ...displayList, ...displayList];
     }
     return displayList;
   }, [displayList, originalCount]);
@@ -67,10 +69,9 @@ export default function MapContent({ lat, lng, places = [], singlePlace }: MapCo
     displayList.find(p => p.id === selectedId) || displayList[0] || null
     , [displayList, selectedId]);
 
-  const handleMarkerClick = (id: string) => {
+  const handleMarkerClick = (id: string, index: number) => {
     setSelectedId(id);
-    const index = displayList.findIndex(p => p.id === id);
-    if (swiperRef.current && index !== -1) {
+    if (swiperRef.current && originalCount > 1) {
       swiperRef.current.slideToLoop(index);
     }
   };
@@ -88,24 +89,60 @@ export default function MapContent({ lat, lng, places = [], singlePlace }: MapCo
           <div className="w-full h-[400px] rounded-[15px] overflow-hidden shadow-inner bg-gray-100">
             <Map defaultCenter={{ lat, lng }} defaultZoom={16} mapId={MAP_ID} gestureHandling={'greedy'}>
               <MapController selectedPlace={selectedPlace} />
+
               <AdvancedMarker position={{ lat, lng }}>
                 <Pin background={'#4285F4'} glyphColor={'#FFF'} borderColor={'#000'} />
               </AdvancedMarker>
-              {displayList.map((place) => (
+
+              {/* レストランマーカーとInfoWindowの連動 */}
+              {!singlePlace && displayList.map((place, index) => (
                 place.lat != null && place.lng != null && (
-                  <AdvancedMarker key={`marker-${place.id}`} position={{ lat: place.lat, lng: place.lng }} onClick={() => handleMarkerClick(place.id)}>
-                    <Pin background={selectedId === place.id ? '#FFD700' : '#EA4335'} scale={selectedId === place.id ? 1.3 : 1.0} />
-                  </AdvancedMarker>
+                  <div key={place.id}>
+                    <AdvancedMarker
+                      position={{ lat: place.lat, lng: place.lng }}
+                      onClick={() => handleMarkerClick(place.id, index)}
+                    >
+                      <Pin
+                        background={selectedId === place.id ? '#FFD700' : '#EA4335'}
+                        scale={selectedId === place.id ? 1.3 : 1.0}
+                      />
+                    </AdvancedMarker>
+
+                    {/* スライドに連動して開くInfoWindow */}
+                    {selectedId === place.id && (
+                      <InfoWindow
+                        position={{ lat: place.lat, lng: place.lng }}
+                        onCloseClick={() => setSelectedId(null)}
+                      >
+                        <div className="p-1 flex flex-col items-center">
+                          <p className="text-black font-bold text-sm mb-1 whitespace-nowrap">{place.restaurantName}</p>
+                          <button
+                            onClick={() => router.push(`/restaurant/${place.id}`)}
+                            className="text-[10px] bg-blue-500 text-white px-2 py-1 rounded"
+                          >
+                            詳細を見る
+                          </button>
+                        </div>
+                      </InfoWindow>
+                    )}
+                  </div>
                 )
               ))}
+
+              {/* 詳細表示用マーカー */}
+              {singlePlace && singlePlace.lat != null && singlePlace.lng != null && (
+                <AdvancedMarker position={{ lat: singlePlace.lat, lng: singlePlace.lng }}>
+                  <Pin background={'#FFD700'} scale={1.2} />
+                </AdvancedMarker>
+              )}
             </Map>
           </div>
 
           <div className="w-full">
-            {isApiLoaded && (
+            {isApiLoaded && !singlePlace && (
               <div className="px-4">
                 <Swiper
-                  key={`swiper-final-fixed-${originalCount}`}
+                  key={`swiper-v6-${originalCount}`}
                   modules={[Navigation, Pagination, Autoplay]}
                   spaceBetween={12}
                   slidesPerView={1.2}
@@ -115,10 +152,10 @@ export default function MapContent({ lat, lng, places = [], singlePlace }: MapCo
                   }}
                   centeredSlides={true}
                   loop={originalCount > 1}
-                  autoplay={{
+                  autoplay={originalCount > 1 ? {
                     delay: 3000,
                     disableOnInteraction: false,
-                  }}
+                  } : false}
                   onSwiper={(swiper) => (swiperRef.current = swiper)}
                   onSlideChange={(swiper) => {
                     const idx = swiper.realIndex % originalCount;
@@ -136,7 +173,7 @@ export default function MapContent({ lat, lng, places = [], singlePlace }: MapCo
                           setSelectedId(place.id);
                           router.push(`/restaurant/${place.id}`);
                         }}
-                        className={`p-3 h-[250px] cursor-pointer transition-all duration-300 relative z-20 overflow-hidden
+                        className={`p-3 h-[250px] cursor-pointer transition-all duration-300 relative z-20 overflow-hidden hover:opacity-60
                           ${selectedId === place.id
                             ? 'border-4 border-red-900 shadow-lg'
                             : 'border border-gray-200 opacity-100'}`}
@@ -148,7 +185,7 @@ export default function MapContent({ lat, lng, places = [], singlePlace }: MapCo
                           priority
                           alt={place.restaurantName || ""}
                         />
-                        <p className="font-bold bg-black/60 text-white w-full px-2 absolute z-20 bottom-0 left-0">
+                        <p className="font-bold bg-black/60 text-white w-full px-2 absolute z-20 bottom-0 left-0 text-center truncate">
                           {place.restaurantName}
                         </p>
                       </div>

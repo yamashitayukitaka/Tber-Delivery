@@ -5,7 +5,7 @@ import MenuContent from "@/components/menu-content";
 import MenuSearchBar from "@/components/menu-search-bar";
 import { fetchCategoryMenus } from "@/lib/menus/api";
 import { fetchLocation, getPlaceDetails } from "@/lib/restaurants/api";
-import { MapPlace } from "@/types";
+import { MapPlace, SingleMapPlace } from "@/types";
 import { createClient } from "@/utils/supabase/server";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -28,12 +28,11 @@ export default async function RestaurantPage({
   console.log('singleRestaurant', restaurant)
   const { lat, lng } = await fetchLocation();
 
-  const singleMapPlace: MapPlace = {
+  const singleMapPlace: SingleMapPlace = {
     id: restaurantId,
     restaurantName: restaurant?.displayName,
     lat: restaurant?.location?.latitude,
     lng: restaurant?.location?.longitude,
-    photoUrl: restaurant?.photoUrl,
   }
 
   const supabase = await createClient()
