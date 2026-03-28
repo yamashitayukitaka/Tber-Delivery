@@ -12,6 +12,12 @@ import Image from "next/image";
 import { getAverageStars } from "@/lib/comments/api";
 import { MapPlace } from "@/types";
 import MapContent from "@/components/map-content";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+
+// スタイルシートのインポートを忘れずに
+import 'swiper/css';
+import MainVisual from "@/components/main-visual";
 
 
 
@@ -68,25 +74,16 @@ export default async function Home() {
   const { data: menus, error: menusError } = primaryType ? await fetchMenus(primaryType) : { data: [] };
   return (
     <div className="pt-[78px] max-xl:pt-32 max-md:pt-[201px]">
-      <div className="h-[600px] overflow-hidden relative">
-        <Image
-          className="object-cover"
-          src="/images/header/img01.jpg"
-          alt="メインビジュアル"
-          fill
-          priority
-          sizes="(max-width:1280px) 100vw, 1920px"
-        />
-        <h2 className="absolute top-[50%] left-[50%] text-white transform -translate-x-1/2 -translate-y-1/2 z-20 font-bold text-[40px] text-center bg-black/50 px-3 py-8 max-lg:w-[80%] max-lg:text-[24px]">
-          位置情報から<br className="hidden max-sm:block" />飲食店を検索し<br />
-          注文・決済まで行える<br className="hidden max-sm:block" />フードデリバリーアプリ
-        </h2>
-      </div>
+      <MainVisual />
 
-      <MapContent lat={lat} lng={lng} places={mapPlaces} />
-
-      <div className="max-w-7xl mx-auto px-10 py-[50px]">
-        <Categories />
+      <div className="max-w-7xl mx-auto px-10">
+        <h3 className="flex justify-center items-center font-bold text-[28px] max-md:text-[24px] h-[85px]">
+          近くの飲食店を地図から探す
+        </h3>
+        <MapContent lat={lat} lng={lng} places={mapPlaces} />
+        <div className="mb-25">
+          <Categories />
+        </div>
       </div>
 
       <div className="relative py-10">
