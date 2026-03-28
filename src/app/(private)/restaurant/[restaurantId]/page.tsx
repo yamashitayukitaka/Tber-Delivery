@@ -41,13 +41,10 @@ export default async function RestaurantPage({
   const primaryType = restaurant?.primaryType
   const { data: categoryMenus, error: munusError } = primaryType ? await fetchCategoryMenus(primaryType, searchMenu) : { data: [] };
   if (!restaurant) notFound();
-
-
-
   return (
     <>
       <div className="pt-[78px] max-xl:pt-32 max-md:pt-[201px]">
-        <div className="h-[600px] shadow-md relative overflow-hidden">
+        <div className="h-75 shadow-md relative overflow-hidden">
           <Image
             src={restaurant.photoUrl!}
             fill
@@ -61,7 +58,12 @@ export default async function RestaurantPage({
             <CommentsAverage restaurantId={restaurantId} />
           </div>
         </div>
-        <MapContent lat={lat} lng={lng} singlePlace={singleMapPlace} />
+        <div className="max-w-7xl mx-auto px-10">
+          <h3 className="flex justify-center items-center font-bold text-[28px] max-md:text-[24px] h-[85px]">
+            位置を確認する
+          </h3>
+          <MapContent lat={lat} lng={lng} singlePlace={singleMapPlace} />
+        </div>
         <div className="mt-4 flex mb-6 items-center justify-between max-w-7xl mx-auto px-10 max-lg:flex-col max-lg:items-start">
           <div className="flex-1 max-lg:flex-none max-lg:w-[80%] max-sm:w-full">
             <div className="ml-auto w-80 max-lg:w-full"><MenuSearchBar /></div>

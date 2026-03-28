@@ -92,8 +92,8 @@ export default function Categories() {
     }
   }
   return (
-    <>
-      <h3 className="text-center font-bold text-[32px] max-md:text-[24px]">近くのお店をカテゴリーから探す</h3>
+    <div>
+      <h3 className="text-center font-bold text-[28px] max-md:text-[24px]">近くの飲食店をカテゴリーから探す</h3>
       <CarouselContainer slideToShow={10} variant={true}>
         {
           categories.map((category) => (
@@ -106,6 +106,6 @@ export default function Categories() {
           ))
         }
       </CarouselContainer>
-    </>
+    </div>
   );
 }

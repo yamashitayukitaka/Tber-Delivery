@@ -7,7 +7,6 @@ import {
   Map,
   AdvancedMarker,
   Pin,
-  InfoWindow, // 追加
   useMap
 } from '@vis.gl/react-google-maps';
 import { useRouter } from 'next/navigation';
@@ -29,27 +28,31 @@ interface MapContentProps {
 
 const MapController = ({ selectedPlace }: { selectedPlace: MapPlace | null }) => {
   const map = useMap();
+
   useEffect(() => {
     if (map && selectedPlace?.lat != null && selectedPlace?.lng != null) {
       map.panTo({ lat: selectedPlace.lat, lng: selectedPlace.lng });
     }
   }, [map, selectedPlace]);
+
   return null;
 };
 
 export default function MapContent({ lat, lng, places = [], singlePlace }: MapContentProps) {
   const router = useRouter();
   const swiperRef = useRef<SwiperType | null>(null);
+
   const [isApiLoaded, setIsApiLoaded] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '';
   const MAP_ID = process.env.NEXT_PUBLIC_MAP_ID || '';
 
-  const displayList = useMemo(() =>
-    (singlePlace ? [singlePlace] : places) as MapPlace[], // ここで「MapPlaceの配列だ」と言い切る
+  const displayList = useMemo(
+    () => (singlePlace ? [singlePlace] : places) as MapPlace[],
     [singlePlace, places]
   );
+
   const originalCount = displayList.length;
 
   const swiperItems = useMemo(() => {
@@ -65,9 +68,10 @@ export default function MapContent({ lat, lng, places = [], singlePlace }: MapCo
     }
   }, [displayList, originalCount, selectedId]);
 
-  const selectedPlace = useMemo(() =>
-    displayList.find(p => p.id === selectedId) || displayList[0] || null
-    , [displayList, selectedId]);
+  const selectedPlace = useMemo(
+    () => displayList.find(p => p.id === selectedId) || displayList[0] || null,
+    [displayList, selectedId]
+  );
 
   const handleMarkerClick = (id: string, index: number) => {
     setSelectedId(id);
@@ -79,25 +83,31 @@ export default function MapContent({ lat, lng, places = [], singlePlace }: MapCo
   if (originalCount === 0) return null;
 
   return (
-    <>
-      <h3 className="flex justify-center items-center font-bold text-[32px] max-md:text-[24px] h-[100px]">
-        {singlePlace ? "お店の場所を確認する" : "近くのお店を地図から探す"}
-      </h3>
-
+    <div className="mb-25">
       <APIProvider apiKey={API_KEY} onLoad={() => setIsApiLoaded(true)}>
         <div className="flex flex-col gap-4">
-          <div className="w-full h-[400px] rounded-[15px] overflow-hidden shadow-inner bg-gray-100">
-            <Map defaultCenter={{ lat, lng }} defaultZoom={16} mapId={MAP_ID} gestureHandling={'greedy'}>
+
+          {/* MAP */}
+          <div className="w-full h-[300px] overflow-hidden shadow-inner bg-gray-100">
+            <Map
+              defaultCenter={{ lat, lng }}
+              defaultZoom={15}
+              mapId={MAP_ID}
+              gestureHandling={'greedy'}
+            >
               <MapController selectedPlace={selectedPlace} />
 
+              {/* 現在地 */}
               <AdvancedMarker position={{ lat, lng }}>
                 <Pin background={'#4285F4'} glyphColor={'#FFF'} borderColor={'#000'} />
               </AdvancedMarker>
 
-              {/* レストランマーカーとInfoWindowの連動 */}
+              {/* 店舗マーカー */}
               {!singlePlace && displayList.map((place, index) => (
                 place.lat != null && place.lng != null && (
                   <div key={place.id}>
+
+                    {/* ピン */}
                     <AdvancedMarker
                       position={{ lat: place.lat, lng: place.lng }}
                       onClick={() => handleMarkerClick(place.id, index)}
@@ -108,95 +118,106 @@ export default function MapContent({ lat, lng, places = [], singlePlace }: MapCo
                       />
                     </AdvancedMarker>
 
-                    {/* スライドに連動して開くInfoWindow */}
+                    {/* 吹き出し（別マーカー） */}
                     {selectedId === place.id && (
-                      <InfoWindow
-                        position={{ lat: place.lat, lng: place.lng }}
-                        onCloseClick={() => setSelectedId(null)}
-                      >
-                        <div className="p-1 flex flex-col items-center">
-                          <p className="text-black font-bold text-sm mb-1 whitespace-nowrap">{place.restaurantName}</p>
-                          <button
-                            onClick={() => router.push(`/restaurant/${place.id}`)}
-                            className="text-[10px] bg-blue-500 text-white px-2 py-1 rounded"
-                          >
-                            詳細を見る
-                          </button>
+                      <AdvancedMarker position={{ lat: place.lat, lng: place.lng }}>
+                        <div className="relative">
+                          <div className="absolute bottom-[60px] left-1/2 -translate-x-1/2 bg-white shadow-lg rounded px-3 py-2 text-xs whitespace-nowrap z-50 flex flex-col justify-center">
+                            <p className="text-black font-bold text-sm mb-1">
+                              {place.restaurantName}
+                            </p>
+
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                router.push(`/restaurant/${place.id}`);
+                              }}
+                              className="text-[10px] bg-blue-500 text-white px-2 py-1 rounded"
+                            >
+                              詳細を見る
+                            </button>
+
+                            {/* 矢印 */}
+                            <div className="absolute left-1/2 -bottom-1 w-2 h-2 bg-white rotate-45 -translate-x-1/2"></div>
+                          </div>
                         </div>
-                      </InfoWindow>
+                      </AdvancedMarker>
                     )}
+
                   </div>
                 )
               ))}
 
-              {/* 詳細表示用マーカー */}
+              {/* single */}
               {singlePlace && singlePlace.lat != null && singlePlace.lng != null && (
                 <AdvancedMarker position={{ lat: singlePlace.lat, lng: singlePlace.lng }}>
                   <Pin background={'#FFD700'} scale={1.2} />
                 </AdvancedMarker>
               )}
+
             </Map>
           </div>
 
+          {/* SWIPER */}
           <div className="w-full">
             {isApiLoaded && !singlePlace && (
-              <div className="px-4">
-                <Swiper
-                  key={`swiper-v6-${originalCount}`}
-                  modules={[Navigation, Pagination, Autoplay]}
-                  spaceBetween={12}
-                  slidesPerView={1.2}
-                  breakpoints={{
-                    640: { slidesPerView: 2.2 },
-                    1024: { slidesPerView: 4 }
-                  }}
-                  centeredSlides={true}
-                  loop={originalCount > 1}
-                  autoplay={originalCount > 1 ? {
-                    delay: 3000,
-                    disableOnInteraction: false,
-                  } : false}
-                  onSwiper={(swiper) => (swiperRef.current = swiper)}
-                  onSlideChange={(swiper) => {
-                    const idx = swiper.realIndex % originalCount;
-                    const activePlace = displayList[idx];
-                    if (activePlace && selectedId !== activePlace.id) {
-                      setSelectedId(activePlace.id);
-                    }
-                  }}
-                  className="pb-8 w-full"
-                >
-                  {swiperItems.map((place, index) => (
-                    <SwiperSlide key={`${place.id}-${index}`} className="h-auto">
-                      <div
-                        onClick={() => {
-                          setSelectedId(place.id);
-                          router.push(`/restaurant/${place.id}`);
-                        }}
-                        className={`p-3 h-[250px] cursor-pointer transition-all duration-300 relative z-20 overflow-hidden hover:opacity-60
-                          ${selectedId === place.id
-                            ? 'border-4 border-red-900 shadow-lg'
-                            : 'border border-gray-200 opacity-100'}`}
-                      >
-                        <Image
-                          className="absolute z-0 top-0 left-0 object-cover"
-                          fill
-                          src={place.photoUrl || "/placeholder-restaurant.jpg"}
-                          priority
-                          alt={place.restaurantName || ""}
-                        />
-                        <p className="font-bold bg-black/60 text-white w-full px-2 absolute z-20 bottom-0 left-0 text-center truncate">
-                          {place.restaurantName}
-                        </p>
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
+              <Swiper
+                key={`swiper-${originalCount}`}
+                modules={[Navigation, Pagination, Autoplay]}
+                spaceBetween={12}
+                slidesPerView={1.2}
+                breakpoints={{
+                  640: { slidesPerView: 2.2 },
+                  1024: { slidesPerView: 4 }
+                }}
+                centeredSlides={true}
+                loop={originalCount > 1}
+                autoplay={originalCount > 1 ? {
+                  delay: 3000,
+                  disableOnInteraction: false,
+                } : false}
+                onSwiper={(swiper) => (swiperRef.current = swiper)}
+                onSlideChange={(swiper) => {
+                  const idx = swiper.realIndex % originalCount;
+                  const activePlace = displayList[idx];
+                  if (activePlace && selectedId !== activePlace.id) {
+                    setSelectedId(activePlace.id);
+                  }
+                }}
+                className="pb-8 w-full"
+              >
+                {swiperItems.map((place, index) => (
+                  <SwiperSlide key={`${place.id}-${index}`}>
+                    <div
+                      onClick={() => {
+                        setSelectedId(place.id);
+                        router.push(`/restaurant/${place.id}`);
+                      }}
+                      className={`p-3 h-[200px] cursor-pointer relative overflow-hidden hover:opacity-60
+                      ${selectedId === place.id
+                          ? 'border-4 border-red-900 shadow-lg'
+                          : 'border border-gray-200'
+                        }`}
+                    >
+                      <Image
+                        className="absolute top-0 left-0 object-cover"
+                        fill
+                        src={place.photoUrl || "/no_image.png"}
+                        alt={place.restaurantName || ""}
+                      />
+
+                      <p className="font-bold bg-black/60 text-white inset-x-0 px-2 absolute bottom-0 text-center truncate">
+                        {place.restaurantName}
+                      </p>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             )}
           </div>
+
         </div>
       </APIProvider>
-    </>
+    </div>
   );
 }

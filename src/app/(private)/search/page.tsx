@@ -28,12 +28,12 @@ export default async function SearchPage({
 
     return (
       <div className="py-[77px] max-xl:py-32 max-md:py-[201.13px]">
-        <MapContent lat={lat} lng={lng} places={categoryMapPlaces} />
-        <div className="max-w-7xl mx-auto px-10 py-5">
 
+        <div className="max-w-7xl mx-auto px-10 py-5">
           <div className="mb-4">
             <Categories />
           </div>
+          <MapContent lat={lat} lng={lng} places={categoryMapPlaces} />
           {!categoryRestaurants ? (
             <p className="text-destructive">{fetchError}</p>
           ) : categoryRestaurants.length > 0 ? (
@@ -61,12 +61,12 @@ export default async function SearchPage({
       })) || [];
     return (
       <>
-        <MapContent lat={lat} lng={lng} places={keywordMapPlaces} />
         <div className="max-w-7xl mx-auto px-10 py-24">
 
           <div className="mb-4">
             <Categories />
           </div>
+          <MapContent lat={lat} lng={lng} places={keywordMapPlaces} />
           {!restaurants ? (
             <p className="text-destructive">{fetchError}</p>
           ) : restaurants.length > 0 ? (
