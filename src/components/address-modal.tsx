@@ -151,7 +151,7 @@ export default function AddressModal() {
       rounded-md 
       bg-blue-600
       text-white 
-      font-medium 
+      font-bold 
       hover:opacity-60
       focus:outline-none 
       focus:ring-2 

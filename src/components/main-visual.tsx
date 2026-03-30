@@ -45,7 +45,7 @@ export default function MainVisual() {
         sizes="(max-width:1280px) 100vw, 1920px"
       />
       <div className="absolute top-[50%] left-[50%] transform -translate-y-1/2 -translate-x-1/2 z-20 w-full">
-        <h2 className="w-fit m-auto text-white font-bold text-[24px] text-center bg-black/50 px-3 py-3 max-lg:w-[80%] max-lg:text-[24px] mb-6 shadow-lg">
+        <h2 className="w-fit m-auto text-white font-bold text-[24px] text-center bg-black/50 px-3 py-3 max-lg:w-[80%] max-md:text-[20px]  shadow-lg">
           位置情報から<br className="hidden max-sm:block" />飲食店を検索し<br />
           注文・決済まで行える<br className="hidden max-sm:block" />フードデリバリーアプリ
         </h2>

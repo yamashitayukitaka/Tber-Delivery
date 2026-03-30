@@ -4,6 +4,7 @@ import Categories from "@/components/categories";
 import { redirect } from "next/navigation";
 import { MapPlace } from "@/types";
 import MapContent from "@/components/map-content";
+import { categories } from "@/lib/constants";
 export default async function SearchPage({
   searchParams,
 }: {
@@ -12,10 +13,13 @@ export default async function SearchPage({
 
 
   const { category, restaurant } = await searchParams
+
+
   const { lat, lng } = await fetchLocation();
 
   if (category) {
     const { data: categoryRestaurants, error: fetchError } = await fetchCategoryRestaurants(category, lat, lng);
+    const selectedCategory = categories.find(c => c.type === category);
     const categoryMapPlaces: MapPlace[] = categoryRestaurants
       ?.filter(r => r.location?.latitude != null && r.location?.longitude != null)
       .map(r => ({
@@ -31,16 +35,20 @@ export default async function SearchPage({
 
         <div className="max-w-7xl mx-auto px-10 py-5">
           <div className="mb-4">
+            <h3 className="text-center font-bold text-[28px] max-md:text-[24px]">近くの{selectedCategory?.categoryName}店を地図から探す</h3>
             <Categories />
           </div>
           <MapContent lat={lat} lng={lng} places={categoryMapPlaces} />
           {!categoryRestaurants ? (
             <p className="text-destructive">{fetchError}</p>
           ) : categoryRestaurants.length > 0 ? (
-            <RestaurantList restaurants={categoryRestaurants} />
+            <>
+              <h3 className="text-center font-bold text-[28px] max-md:text-[24px]">近くの{selectedCategory?.categoryName}店をリストから探す</h3>
+              <RestaurantList restaurants={categoryRestaurants} />
+            </>
           ) : (
             <p>
-              カテゴリ<strong>{category}</strong>
+              カテゴリ<strong>{selectedCategory?.categoryName}</strong>
               に一致するレストランが見つかりません
               ✅
             </p>
@@ -62,18 +70,13 @@ export default async function SearchPage({
     return (
       <>
         <div className="max-w-7xl mx-auto px-10 py-24">
-
-          <div className="mb-4">
-            <Categories />
-          </div>
+          <h3 className="text-center font-bold text-[28px] max-md:text-[24px]">近くの{restaurant}を地図から探す</h3>
           <MapContent lat={lat} lng={lng} places={keywordMapPlaces} />
           {!restaurants ? (
             <p className="text-destructive">{fetchError}</p>
           ) : restaurants.length > 0 ? (
             <>
-              <div className="mb-4">
-                {restaurant}の検索結果は{restaurants?.length}件です
-              </div>
+              <h3 className="text-center font-bold text-[28px] max-md:text-[24px]">近くの{restaurant}をリストから探す</h3>
               <RestaurantList restaurants={restaurants} />
             </>
           ) : (

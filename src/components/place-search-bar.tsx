@@ -112,7 +112,7 @@ export default function PlaceSearchBar({ lat, lng }: PlaceSearchBarProps) {
 
   return (
     <Command onKeyDown={handleOnKeyDown} className="overflow-visible bg-muted h-9" shouldFilter={false}>
-      <CommandInput placeholder="店舗名で検索する"
+      <CommandInput placeholder="フリーワード検索"
         value={inputText}
         onValueChange={
           setInputText
