@@ -213,9 +213,9 @@ export async function fetchRestaurantsByKeyword(query: string, lat: number, lng:
     locationBias: {
       circle: {
         center: {
-          latitude: lat,//渋谷
+          latitude: lat,
           // 緯度
-          longitude: lng,//渋谷
+          longitude: lng,
           // 経度
         },
         radius: 1000.0

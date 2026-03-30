@@ -12,9 +12,6 @@ import Image from "next/image";
 import { getAverageStars } from "@/lib/comments/api";
 import { MapPlace } from "@/types";
 import MapContent from "@/components/map-content";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
-
 // スタイルシートのインポートを忘れずに
 import 'swiper/css';
 import MainVisual from "@/components/main-visual";
@@ -75,16 +72,22 @@ export default async function Home() {
   return (
     <div className="pt-[78px] max-xl:pt-32 max-md:pt-[201px]">
       <MainVisual />
-
-      <div className="max-w-7xl mx-auto px-10">
-        <h3 className="flex justify-center items-center font-bold text-[28px] max-md:text-[24px] h-[85px]">
-          近くの飲食店を地図から探す
-        </h3>
-        <MapContent lat={lat} lng={lng} places={mapPlaces} />
-        <div className="mb-25">
-          <Categories />
-        </div>
-      </div>
+      {!nearbyRestaurants ? (
+        <p>{restaurantsError}</p>
+      ) : nearbyRestaurants.length > 0 && (
+        <>
+          <div className="max-w-7xl mx-auto max-md:w-[92%]">
+            <h3 className="flex justify-center items-center font-bold text-[28px] max-md:text-[20px] h-[85px]">
+              近くの飲食店を地図から探す
+            </h3>
+            <MapContent lat={lat} lng={lng} places={mapPlaces} />
+            <div className="mb-25">
+              <h3 className="text-center font-bold text-[28px] max-md:text-[20px]">近くの飲食店をカテゴリーから探す</h3>
+              <Categories />
+            </div>
+          </div>
+        </>
+      )}
 
       <div className="relative py-10">
         <Image
@@ -101,18 +104,23 @@ export default async function Home() {
           {!nearbyRestaurants ? (
             <p>{restaurantsError}</p>
           ) : nearbyRestaurants.length > 0 ? (
-            <Section title="近くのお店" expandedContent={<RestaurantList restaurants={nearbyRestaurants} averageStars={averageStars} />}>
-              <CarouselContainer slideToShow={4}>
-                {nearbyRestaurants.map((restaurant) => {
-                  const starData = averageStars?.find(
-                    (s) => s.restaurant_id === restaurant.id
-                  );
-                  return (
-                    <RestaurantCard restaurant={restaurant} key={restaurant.id} averageStar={starData?.averageStar} />
-                  );
-                })}
-              </CarouselContainer>
-            </Section>
+            <>
+              <h3 className="flex justify-center items-center font-bold text-[28px] max-md:text-[24px] h-[85px]">
+                近くの飲食店をリストから探す
+              </h3>
+              <Section title="飲食店" expandedContent={<RestaurantList restaurants={nearbyRestaurants} averageStars={averageStars} />}>
+                <CarouselContainer slideToShow={4}>
+                  {nearbyRestaurants.map((restaurant) => {
+                    const starData = averageStars?.find(
+                      (s) => s.restaurant_id === restaurant.id
+                    );
+                    return (
+                      <RestaurantCard restaurant={restaurant} key={restaurant.id} averageStar={starData?.averageStar} />
+                    );
+                  })}
+                </CarouselContainer>
+              </Section>
+            </>
           ) : (
             <p>近くにレストランがありません</p>
           )}
@@ -122,8 +130,7 @@ export default async function Home() {
           {!nearbyRamenRestaurants ? (
             <p>{nearbyRamenRestaurantError}</p>
           ) : nearbyRamenRestaurants.length > 0 ? (
-
-            <Section title="近くのラーメン店" expandedContent={<RestaurantList restaurants={nearbyRamenRestaurants} averageStars={ramenAverageStars} />}>
+            <Section title="ラーメン店" expandedContent={<RestaurantList restaurants={nearbyRamenRestaurants} averageStars={ramenAverageStars} />}>
               <CarouselContainer slideToShow={4}>
                 {nearbyRamenRestaurants.map((restaurant) => {
                   const starData = ramenAverageStars?.find(
@@ -135,7 +142,6 @@ export default async function Home() {
                 })}
               </CarouselContainer>
             </Section>
-
           ) : (
             <p>近くにラーメン店がありません</p>
           )}
