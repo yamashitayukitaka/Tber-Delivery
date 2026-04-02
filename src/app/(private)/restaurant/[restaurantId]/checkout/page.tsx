@@ -1,4 +1,5 @@
 import CartSummary from "@/components/cart-summary";
+import Header from "@/components/header";
 // import PaymentModal from "@/components/payment-modal";
 // import AddressModal from "@/components/address-modal";
 // import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,9 +10,11 @@ export default async function CheckoutPage({ params }: {
 }) {
   const { restaurantId } = await params;
   return (
-    <div className="flex gap-4  p-10 py-40 justify-center w-full max-md:pt-[250px]">
-      {/* 左側エリア */}
-      {/* <div className="max-w-3xl space-y-4 flex-1">
+    <>
+      <Header />
+      <div className="flex gap-4  p-10 py-40 justify-center w-full">
+        {/* 左側エリア */}
+        {/* <div className="max-w-3xl space-y-4 flex-1">
         <Card>
           <CardHeader>
             <CardTitle>配達の詳細</CardTitle>
@@ -36,9 +39,9 @@ export default async function CheckoutPage({ params }: {
           </CardContent>
         </Card>
       </div> */}
-      {/* 右側エリア */}
-      <CartSummary restaurantId={restaurantId} />
-    </div>
-
+        {/* 右側エリア */}
+        <CartSummary restaurantId={restaurantId} />
+      </div>
+    </>
   );
 }

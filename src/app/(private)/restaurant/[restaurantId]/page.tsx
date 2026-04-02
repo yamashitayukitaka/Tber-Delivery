@@ -1,5 +1,6 @@
 import CommentsAverage from "@/components/average-star";
 import CommentsContainer from "@/components/comments-container";
+import Header from "@/components/header";
 import MapContent from "@/components/map-content";
 import MenuContent from "@/components/menu-content";
 import MenuSearchBar from "@/components/menu-search-bar";
@@ -7,6 +8,7 @@ import { fetchCategoryMenus } from "@/lib/menus/api";
 import { fetchLocation, getPlaceDetails } from "@/lib/restaurants/api";
 import { MapPlace, SingleMapPlace } from "@/types";
 import { createClient } from "@/utils/supabase/server";
+
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -43,7 +45,8 @@ export default async function RestaurantPage({
   if (!restaurant) notFound();
   return (
     <>
-      <div className="pt-[78px] max-xl:pt-32 max-md:pt-[201px]">
+      <Header showNav={true} />
+      <div style={{ paddingTop: 'calc(var(--headerHeight) * 1px)' }}>
         <div className="h-75 shadow-md relative overflow-hidden">
           <Image
             src={restaurant.photoUrl!}
