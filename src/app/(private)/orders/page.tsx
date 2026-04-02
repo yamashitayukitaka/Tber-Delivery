@@ -10,6 +10,7 @@ export default async function OrdersPage() {
   }
   return (
     <>
+      <Header />
       <div className="space-y-4 pt-[78px] max-xl:pt-32 max-md:pt-[201px]">
         {orders.map((order) => (
           <OrderCard key={order.id} order={order} />
