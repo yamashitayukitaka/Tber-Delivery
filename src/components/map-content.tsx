@@ -7,9 +7,7 @@ import {
   Map,
   AdvancedMarker,
   Pin,
-  InfoWindow,
   useMap,
-  Marker
 } from '@vis.gl/react-google-maps';
 import { useRouter } from 'next/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -108,6 +106,7 @@ export default function MapContent({ lat, lng, places = [], singlePlace }: MapCo
                   <AdvancedMarker
                     position={{ lat: place.lat!, lng: place.lng! }}
                     onClick={() => handleMarkerClick(place.id, index)}
+                    zIndex={selectedId === place.id ? 50 : 1}
                   >
                     <Pin
                       background={selectedId === place.id ? '#FFD700' : '#EA4335'}
@@ -118,9 +117,9 @@ export default function MapContent({ lat, lng, places = [], singlePlace }: MapCo
 
                   {/* InfoWindow (標準の吹き出し) */}
                   {selectedId === place.id && (
-                    <AdvancedMarker position={{ lat: place.lat!, lng: place.lng! }}>
+                    <AdvancedMarker position={{ lat: place.lat!, lng: place.lng! }} zIndex={100}>
                       <div className="relative">
-                        <div className="absolute bottom-[60px] left-1/2 -translate-x-1/2 bg-white shadow-lg rounded px-3 py-2 text-xs whitespace-nowrap z-100 flex flex-col justify-center">
+                        <div className="absolute bottom-[60px] left-1/2 -translate-x-1/2 bg-white shadow-lg rounded px-3 py-2 text-xs whitespace-nowrap flex flex-col justify-center">
                           <p className="text-black font-bold text-sm mb-1">
                             {place.restaurantName}
                           </p>
