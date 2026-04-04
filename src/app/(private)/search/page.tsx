@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { MapPlace } from "@/types";
 import MapContent from "@/components/map-content";
 import { categories } from "@/lib/constants";
+import Header from "@/components/header";
 export default async function SearchPage({
   searchParams,
 }: {
@@ -31,30 +32,32 @@ export default async function SearchPage({
       })) || [];
 
     return (
-      <div className="max-w-7xl mx-auto px-10 py-5" style={{ paddingTop: 'calc(var(--headerHeight) * 1px)' }}>
-        <div className="mb-4">
-          <h3 className="text-center font-bold text-[28px] max-md:text-[24px]">近くの{selectedCategory?.categoryName}店を地図から探す</h3>
-          <Categories />
+      <>
+        <Header showNav={true} />
+        <div className="max-w-7xl mx-auto px-10 py-5" style={{ paddingTop: 'calc(var(--headerHeight) * 1px)' }}>
+          <div className="mb-4">
+            <h3 className="text-center font-bold text-[28px] max-md:text-[24px]">近くの{selectedCategory?.categoryName}店を地図から探す</h3>
+            <Categories />
+          </div>
+
+          <MapContent lat={lat} lng={lng} places={categoryMapPlaces} />
+
+          {!categoryRestaurants ? (
+            <p className="text-destructive">{fetchError}</p>
+          ) : categoryRestaurants.length > 0 ? (
+            <>
+              <h3 className="text-center font-bold text-[28px] max-md:text-[24px]">近くの{selectedCategory?.categoryName}店をリストから探す</h3>
+              <RestaurantList restaurants={categoryRestaurants} />
+            </>
+          ) : (
+            <p>
+              カテゴリ<strong>{selectedCategory?.categoryName}</strong>
+              に一致するレストランが見つかりません
+              ✅
+            </p>
+          )}
         </div>
-
-        <MapContent lat={lat} lng={lng} places={categoryMapPlaces} />
-
-        {!categoryRestaurants ? (
-          <p className="text-destructive">{fetchError}</p>
-        ) : categoryRestaurants.length > 0 ? (
-          <>
-            <h3 className="text-center font-bold text-[28px] max-md:text-[24px]">近くの{selectedCategory?.categoryName}店をリストから探す</h3>
-            <RestaurantList restaurants={categoryRestaurants} />
-          </>
-        ) : (
-          <p>
-            カテゴリ<strong>{selectedCategory?.categoryName}</strong>
-            に一致するレストランが見つかりません
-            ✅
-          </p>
-        )}
-      </div>
-
+      </>
     );
   } else if (restaurant) {
     const { data: restaurants, error: fetchError } = await fetchRestaurantsByKeyword(restaurant, lat, lng);
@@ -69,6 +72,7 @@ export default async function SearchPage({
       })) || [];
     return (
       <>
+        <Header showNav={true} />
         <div className="max-w-7xl mx-auto px-10 py-5" style={{ paddingTop: 'calc(var(--headerHeight) * 1px)' }}>
           <h3 className="text-center font-bold text-[28px] max-md:text-[24px]">近くの{restaurant}を地図から探す</h3>
           <MapContent lat={lat} lng={lng} places={keywordMapPlaces} />
