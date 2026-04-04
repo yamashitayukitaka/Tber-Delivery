@@ -187,7 +187,7 @@ export default function MapContent({ lat, lng, places = [], singlePlace }: MapCo
                         setSelectedId(place.id);
                         router.push(`/restaurant/${place.id}`);
                       }}
-                      className={`p-3 h-[200px] cursor-pointer relative overflow-hidden transition-all duration-300 
+                      className={`p-3 h-[200px] cursor-pointer relative overflow-hidden transition-all duration-300 hover:opacity-60 
                       ${selectedId === place.id
                         && 'border-4 border-red-900 shadow-lg'
                         }`}
