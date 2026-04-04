@@ -99,5 +99,3 @@ https://www.figma.com/board/XldurHHcUNWb07s3K0UxEs/Untitled?node-id=1-5&t=3nUXMs
 ## 今後の改善
 
 - フロント・バックのパフォーマンス最適化
-- API呼び出しのキャッシュ・再利用性向上
-- 地図API表示
