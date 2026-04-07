@@ -36,7 +36,9 @@ https://tber-delivery.vercel.app/
 <img width="600" alt="決済ページ" src="https://github.com/user-attachments/assets/f1ba755a-734e-484c-861a-06f7fd52d84b" /><br><br>
 
 
-### 📊 データベース設計 (ER図)
+---
+
+### 📊 データベース設計 (ER図)<br><br><br>
 
 
 ```mermaid
