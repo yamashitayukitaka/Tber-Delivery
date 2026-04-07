@@ -1,19 +1,40 @@
 # Tber-Delivery
 
-フードデリバリーサービスを想定した Web アプリケーションです。  
-ユーザー認証・決済・店舗検索など、**実務で必要となる主要機能を一通り実装**しています。
+## 🚀 概要
+
+Tber-Deliveryは、近隣のラーメン・レストラン情報を検索・閲覧・注文できるフルスタックWebアプリです。
+ユーザーは地図や住所、店舗名、カテゴリでレストランを検索し、カート・決済・履歴確認・コメント・評価まで可能です。
+
+---
+
 
 ## 🔗 Demo
 https://tber-delivery.vercel.app/
 
----
+- トップページ
 
-## 🚀 概要
+<img width="600" alt="トップページ"  src="https://github.com/user-attachments/assets/3757b637-6991-43b1-943f-65cb524dba1e" /><br><br>
 
-Tber-Deliveryは、近隣のラーメン・レストラン情報を検索・閲覧・注文できるフルスタックWebアプリです。
-ユーザーは住所やカテゴリでレストランを検索し、カート・決済・履歴確認・コメント・評価まで可能です。
 
----
+- 店舗詳細ページ
+
+<img width="600" alt="店舗詳細ページ" src="https://github.com/user-attachments/assets/1b432f45-00af-4d5c-bed3-d04894a52395" /><br><br>
+
+
+- カテゴリ検索結果ページ
+
+<img width="600" alt="カテゴリ検索結果ページ" src="https://github.com/user-attachments/assets/49ccd333-39b3-4969-9423-e15d9567964f" /><br><br>
+
+
+- 注文確認ページ
+
+<img width="600" alt="注文確認ページ" src="https://github.com/user-attachments/assets/ad4f2c8c-141b-4c85-85a6-50c565ef2f63" /><br><br>
+
+
+- 決済ページ
+
+<img width="600" alt="決済ページ" src="https://github.com/user-attachments/assets/f1ba755a-734e-484c-861a-06f7fd52d84b" /><br><br>
+
 
 ### 📊 データベース設計 (ER図)
 
@@ -120,6 +141,36 @@ erDiagram
 
 ---
 
+
+## 🧰 セットアップ方法
+
+### 前提条件
+- Node.js 18 以上
+- pnpm
+
+### インストール・起動
+   ```bash
+   pnpm install
+   pnpm run dev
+   ```
+   → `http://localhost:3000` で起動します。
+   ※ 初回は `pnpm install` で依存関係インストールが必要です。
+
+### env.localに環境変数をセット
+- プロジェクト直下に .env.local を作成
+- 以下を設定してください
+ ```bash
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+GOOGLE_API_KEY=
+STRIPE_SECRET_KEY=
+  ```
+
+
+---
+
 ## 🧠 工夫した点
 
 ### ⚡️Stripe Checkout を活用したセキュアな決済フローを構築
@@ -148,31 +199,6 @@ erDiagram
 
 ---
 
-## 🧰 セットアップ方法
-
-### 前提条件
-- Node.js 18 以上
-- pnpm
-
-### インストール・起動
-   ```bash
-   pnpm install
-   pnpm run dev
-   ```
-   → `http://localhost:3000` で起動します。
-   ※ 初回は `pnpm install` で依存関係インストールが必要です。
-
-### env.localに環境変数をセット
-- プロジェクト直下に .env.local を作成
-- 以下を設定してください
- ```bash
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_API_URL=http://localhost:3000/api
-GOOGLE_API_KEY=
-STRIPE_SECRET_KEY=
-  ```
 
 ## 今後の改善
 
